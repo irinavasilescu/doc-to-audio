@@ -67,7 +67,7 @@ const HeroSection = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 4rem 4rem 4rem;
+  padding: 4rem;
   min-height: calc(100vh - 80px);
   background-color: #FFFFFF;
   overflow: hidden;
@@ -123,6 +123,9 @@ const StatsContainer = styled.div`
   justify-content: center;
   width: 100%;
   max-width: 1200px;
+  background-color: #DC3545;
+  padding: 4rem;
+  border-radius: 10px;
 
   @media (max-width: 900px) {
     flex-direction: column;
@@ -138,13 +141,13 @@ const StatItem = styled.div`
 
   h3 {
     font-size: 2.5rem;
-    color: #449DD1;
+    color: #FFFFFF;
     margin-bottom: 0.5rem;
   }
 
   p {
     font-size: 1rem;
-    color: #555;
+    color: #FFFFFF;
   }
 `;
 
@@ -225,7 +228,7 @@ const Landing = () => {
         <StatsContainer>
           <StatItem>
             <h3>Fast</h3>
-            <p>Get started instantly. Just upload your PDF and start listening. No signups and no complicated setup — it’s as easy as hitting “Play.”</p>
+            <p>Get started instantly. Just upload your PDF and start listening. No signups and no complicated setup — it's as easy as hitting "Play."</p>
           </StatItem>
           <StatItem>
             <h3>Private</h3>
@@ -234,6 +237,10 @@ const Landing = () => {
           <StatItem>
             <h3>Multilingual</h3>
             <p>Listen to content in your language — or practice another! The app can recognize and read PDFs in over 30 languages, from English and Spanish to Romanian and more</p>
+          </StatItem>
+          <StatItem>
+            <h3>Free</h3>
+            <p>No subscriptions. No hidden fees. Just convert and listen — on your terms.</p>
           </StatItem>
         </StatsContainer>
       </HeroSection>
