@@ -2,6 +2,7 @@ import './App.css';
 import { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import * as pdfjsLib from 'pdfjs-dist';
+import pdfIcon from '../assets/pdf_icon.png';
 
 // Initialize PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
@@ -141,68 +142,94 @@ function App() {
   });
 
   return (
-    <>
-      <div {...getRootProps()} className="dropzone">
-        <input {...getInputProps()} />
-        {uploadedFile ? (
-          <div className="uploaded-file">
-            <p>File uploaded: {uploadedFile.name}</p>
-            <p className="file-size">Size: {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB</p>
-            <button 
-              className="remove-file"
-              onClick={(e) => {
-                e.stopPropagation();
-                setUploadedFile(null);
-                setExtractedText('');
-                setError(null);
-                stopSpeaking();
-              }}
-            >
-              Remove file
-            </button>
+    <div className="app-container">
+      <header className="app-header">
+        <h1>PDF to Speech</h1>
+        <p className="subtitle">Transform your PDF documents into natural-sounding speech</p>
+      </header>
+
+      <main className="main-content">
+        <section className="hero-section">
+          <div className="hero-content">
+            <h2>Convert PDF to Audio</h2>
+            <p>Simply drag and drop your PDF file to get started</p>
           </div>
-        ) : isDragActive ? (
-          <p>Drop the PDF file here...</p>
-        ) : (
-          <p>Drag and drop a PDF file here, or click to select one</p>
-        )}
-      </div>
+        </section>
 
-      {isLoading && (
-        <div className="loading">
-          <p>Extracting text from PDF...</p>
-        </div>
-      )}
-
-      {error && (
-        <div className="error">
-          <p>{error}</p>
-        </div>
-      )}
-
-      {extractedText && (
-        <div className="extracted-text">
-          <h3>Extracted Text:</h3>
-          <div className="text-content">
-            {extractedText}
-          </div>
-          <div className="speech-controls">
-            {!isVoiceReady ? (
-              <p className="voice-loading">Loading speech synthesis...</p>
-            ) : (
-              <div className="speech-buttons">
+        <section className="converter-section">
+          <div {...getRootProps()} className="dropzone">
+            <input {...getInputProps()} />
+            {uploadedFile ? (
+              <div className="uploaded-file">
+                <p>File uploaded: {uploadedFile.name}</p>
+                <p className="file-size">Size: {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB</p>
                 <button 
-                  className="speak-btn"
-                  onClick={isSpeaking ? stopSpeaking : speakText}
+                  className="remove-file"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setUploadedFile(null);
+                    setExtractedText('');
+                    setError(null);
+                    stopSpeaking();
+                  }}
                 >
-                  {isSpeaking ? 'Stop Speaking' : 'Speak Text'}
+                  Remove file
                 </button>
+              </div>
+            ) : isDragActive ? (
+              <p>Drop the PDF file here...</p>
+            ) : (
+              <div className="dropzone-content">
+                <div className="upload-icon">
+                  <img src={pdfIcon} alt="PDF Icon" />
+                </div>
+                <p>Drag and drop a PDF file here, or click to select one</p>
               </div>
             )}
           </div>
-        </div>
-      )}
-    </>
+
+          {isLoading && (
+            <div className="loading">
+              <div className="loading-spinner"></div>
+              <p>Extracting text from PDF...</p>
+            </div>
+          )}
+
+          {error && (
+            <div className="error">
+              <p>{error}</p>
+            </div>
+          )}
+
+          {extractedText && (
+            <div className="extracted-text">
+              <h3>Extracted Text</h3>
+              <div className="text-content">
+                {extractedText}
+              </div>
+              <div className="speech-controls">
+                {!isVoiceReady ? (
+                  <p className="voice-loading">Loading speech synthesis...</p>
+                ) : (
+                  <div className="speech-buttons">
+                    <button 
+                      className="speak-btn"
+                      onClick={isSpeaking ? stopSpeaking : speakText}
+                    >
+                      {isSpeaking ? 'Stop Speaking' : 'Speak Text'}
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </section>
+      </main>
+
+      <footer className="app-footer">
+        <p>© 2024 PDF to Speech Converter. All rights reserved.</p>
+      </footer>
+    </div>
   );
 }
 
