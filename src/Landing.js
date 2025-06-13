@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import personReadingImage from './assets/person_reading.png'; // Import the image
+import languages from './languages.ts';
+import flags from './flags.ts';
 
 const LandingContainer = styled.div`
   min-height: 100vh;
@@ -368,6 +370,10 @@ const LanguageCard = styled.div`
   padding: 1rem;
   border-radius: 8px;
   transition: transform 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 14px;
 
   &:hover {
     transform: translateY(-5px);
@@ -376,6 +382,11 @@ const LanguageCard = styled.div`
   p {
     color: #192BC2;
     font-weight: 500;
+    margin: 0;
+  }
+
+  .flag {
+    font-size: 1.5rem;
   }
 `;
 
@@ -534,8 +545,9 @@ const Landing = () => {
           Supported Languages
         </MainTitle>
         <LanguagesGrid>
-          {['English', 'Spanish', 'French', 'German', 'Italian', 'Portuguese', 'Dutch', 'Russian', 'Chinese', 'Japanese', 'Korean', 'Arabic'].map((language) => (
+          {languages.map((language) => (
             <LanguageCard key={language}>
+              <span className="flag">{flags[language]}</span>
               <p>{language}</p>
             </LanguageCard>
           ))}
