@@ -35,8 +35,12 @@ function App() {
           const currentY = item.transform[5];
           const currentX = item.transform[4];
           
-          // Add newline when y position changes significantly (new line in PDF)
-          if (lastY !== null && Math.abs(lastY - currentY) > 5) {
+          // Add double newline when y position changes significantly (likely a title or subtitle)
+          if (lastY !== null && Math.abs(lastY - currentY) > 25) {
+            fullText += '\n\n';
+          }
+          // Add single newline for smaller vertical changes (new line in PDF)
+          else if (lastY !== null && Math.abs(lastY - currentY) > 8) {
             fullText += '\n';
           }
           // Add space when x position changes significantly (new word in PDF)
@@ -59,6 +63,7 @@ function App() {
       fullText = fullText
         .replace(/\n{3,}/g, '\n\n')  // Replace 3+ newlines with 2
         .replace(/\n\s*\n/g, '\n\n') // Remove empty lines with only spaces
+        .replace(/\n\n\s*\n\n/g, '\n\n') // Remove multiple double line breaks
         .trim();
       
       setExtractedText(fullText);
