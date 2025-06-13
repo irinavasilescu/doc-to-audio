@@ -1,4 +1,5 @@
 import './App.css';
+import Landing from './Landing';
 import { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import * as pdfjsLib from 'pdfjs-dist';
@@ -145,6 +146,7 @@ function App() {
 
   return (
     <div className="App">
+      <Landing />
       <div {...getRootProps()} className="dropzone">
         <input {...getInputProps()} />
         {uploadedFile ? (
