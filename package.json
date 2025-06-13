@@ -1,7 +1,7 @@
 {
   "name": "doc-to-audio",
   "version": "0.1.0",
-  "homepage": "https://irinavasilescu.github.io/doc-to-audio",
+  "homepage": "https://irinavasilescu.github.io/scribbloo",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
