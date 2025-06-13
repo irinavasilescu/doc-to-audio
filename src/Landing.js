@@ -201,6 +201,31 @@ const AppFeatureCard = styled.div`
   }
 `;
 
+const Wave = styled.div`
+  height: 10vh;
+  background-color: #ffffff;
+  position: relative;
+  
+  &:before {   
+    content: "";
+    width: 100%;
+    height: 52px;
+    position: absolute;
+    bottom: -0.3%;
+    left: 0;
+    background-size: auto;
+    background-repeat: repeat no-repeat;
+    background-position: 34vw bottom;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1200  96' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M0 70L50 66C100 62 200 53 300 36C400 18 500 -7 600 1C700 10 800 53 900 70C1000 88 1100 79 1150 75L1200 70V96H1150C1100 96 1000 96 900 96C800 96 700 96 600 96C500 96 400 96 300 96C200 96 100 96 50 96H0V70Z' fill='%23f8f8f8'/></svg>");
+  }
+  
+  @media(max-width:850px) {
+    &:before {    
+      height: 26px
+    }  
+  }
+`;
+
 const Landing = () => {
   return (
     <LandingContainer>
@@ -229,7 +254,7 @@ const Landing = () => {
         <StatsContainer>
           <StatItem>
             <h3>Fast</h3>
-            <p>Get started instantly. Just upload your PDF and start listening. No signups and no complicated setup — it's as easy as hitting "Play."</p>
+            <p>Get started instantly. Just upload your PDF and start listening. No signups and no complicated setup. It's as easy as hitting "Play".</p>
           </StatItem>
           <StatItem>
             <h3>Private</h3>
@@ -237,14 +262,16 @@ const Landing = () => {
           </StatItem>
           <StatItem>
             <h3>Multilingual</h3>
-            <p>Listen to content in your language — or practice another! The app can recognize and read PDFs in over 30 languages, from English and Spanish to Romanian and more</p>
+            <p>Listen to content in your language or practice another! The app can recognize and read PDFs in over 30 languages, from English and Spanish to Romanian and more</p>
           </StatItem>
           <StatItem>
             <h3>Free</h3>
-            <p>No subscriptions. No hidden fees. Just convert and listen — on your terms.</p>
+            <p>No subscriptions. No hidden fees. Just convert and listen. On your terms.</p>
           </StatItem>
         </StatsContainer>
       </HeroSection>
+
+      <Wave/>
 
       <AppFeaturesSection>
         <MainTitle style={{ fontSize: '3rem', marginBottom: '2rem' }}>
