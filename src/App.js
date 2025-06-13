@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import * as pdfjsLib from 'pdfjs-dist';
 
@@ -12,6 +11,60 @@ function App() {
   const [extractedText, setExtractedText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isVoiceReady, setIsVoiceReady] = useState(false);
+
+  useEffect(() => {
+    // Load ResponsiveVoice script
+    const script = document.createElement('script');
+    script.src = 'https://code.responsivevoice.org/responsivevoice.js?key=1fYy7Y8L';
+    script.async = true;
+    
+    script.onload = () => {
+      if (window.responsiveVoice) {
+        setIsVoiceReady(true);
+      }
+    };
+    
+    script.onerror = () => {
+      setError('Failed to load speech synthesis');
+    };
+
+    document.body.appendChild(script);
+
+    return () => {
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+    };
+  }, []);
+
+  const speakText = () => {
+    if (!extractedText || !isVoiceReady) return;
+
+    try {
+      setIsSpeaking(true);
+      // TODO: Add a dropdown to select the voice
+      // TODO: Separate text into paragraphs and speak each paragraph
+      window.responsiveVoice.speak(extractedText, "US English Female", {
+        onend: () => setIsSpeaking(false),
+        onerror: () => {
+          setIsSpeaking(false);
+          setError('Error playing speech');
+        }
+      });
+    } catch (err) {
+      setError('Error playing speech: ' + err.message);
+      setIsSpeaking(false);
+    }
+  };
+
+  const stopSpeaking = () => {
+    if (window.responsiveVoice) {
+      window.responsiveVoice.cancel();
+      setIsSpeaking(false);
+    }
+  };
 
   const extractTextFromPDF = async (file) => {
     try {
@@ -105,6 +158,7 @@ function App() {
                 setUploadedFile(null);
                 setExtractedText('');
                 setError(null);
+                stopSpeaking();
               }}
             >
               Remove file
@@ -134,6 +188,18 @@ function App() {
           <h3>Extracted Text:</h3>
           <div className="text-content">
             {extractedText}
+          </div>
+          <div className="speech-controls">
+            {!isVoiceReady ? (
+              <p className="voice-loading">Loading speech synthesis...</p>
+            ) : (
+              <button 
+                className="speak-btn"
+                onClick={isSpeaking ? stopSpeaking : speakText}
+              >
+                {isSpeaking ? 'Stop Speaking' : 'Speak Text'}
+              </button>
+            )}
           </div>
         </div>
       )}
