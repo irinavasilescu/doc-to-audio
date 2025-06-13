@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import personReadingImage from './assets/person_reading.png'; // Import the image
+import worldMapImage from './assets/world_map.png'; // Import the world map image
 import languages from './languages.ts';
 import flags from './flags.ts';
 
@@ -352,16 +353,42 @@ const CTASection = styled.section`
 
 const LanguagesSection = styled.section`
   padding: 4rem 2rem;
-  background-color: #150578;
+  background: #150578;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   text-align: center;
   position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(21, 5, 120, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-image: url(${worldMapImage});
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+    z-index: 0;
+  }
 
   h1 {
     color: #FFFFFF;
+    position: relative;
+    z-index: 2;
   }
 
   p {
     color: #FFFFFF;
+    position: relative;
+    z-index: 2;
   }
 `;
 
@@ -398,6 +425,9 @@ const LanguageCard = styled.div`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   min-width: 180px;
   flex-shrink: 0;
+  opacity: 1;
+  position: relative;
+  z-index: 2;
 
   &:hover {
     transform: translateY(-3px);
@@ -447,39 +477,6 @@ const NavigationButton = styled.button`
 
   &.next {
     right: 0;
-  }
-`;
-
-const LanguageGroups = styled.div`
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 2rem;
-  justify-content: center;
-  flex-wrap: wrap;
-`;
-
-const LanguageGroup = styled.div`
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  background: #F8F9FA;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: #192BC2;
-    color: #FFFFFF;
-  }
-
-  .flag {
-    font-size: 1.2rem;
-  }
-
-  span {
-    font-size: 0.9rem;
-    font-weight: 500;
   }
 `;
 
@@ -555,11 +552,11 @@ const Landing = () => {
           </StatItem>
           <StatItem>
             <h3>Private</h3>
-            <p>Privacy comes first. All conversions happen locally on your device, ensuring your documents stay secure and never touch external servers. No tracking. No storage. Total peace of mind.</p>
+            <p>Privacy comes first. Your documents stay secure. No tracking. No storage. Total peace of mind.</p>
           </StatItem>
           <StatItem>
             <h3>Multilingual</h3>
-            <p>Listen to content in your language or practice another! The app can recognize and read PDFs in over 30 languages, from English and Spanish to Romanian and more</p>
+            <p>Listen to content in your language or practice another! The app can recognize and read PDFs in over 30 languages.</p>
           </StatItem>
           <StatItem>
             <h3>Free</h3>
@@ -663,25 +660,6 @@ const Landing = () => {
             →
           </NavigationButton>
         </LanguagesContainer>
-
-        <LanguageGroups>
-          <LanguageGroup>
-            <span className="flag">🌍</span>
-            <span>All Languages</span>
-          </LanguageGroup>
-          <LanguageGroup>
-            <span className="flag">🇪🇺</span>
-            <span>European</span>
-          </LanguageGroup>
-          <LanguageGroup>
-            <span className="flag">🌏</span>
-            <span>Asian</span>
-          </LanguageGroup>
-          <LanguageGroup>
-            <span className="flag">🌎</span>
-            <span>American</span>
-          </LanguageGroup>
-        </LanguageGroups>
       </LanguagesSection>
 
       <FAQSection>
