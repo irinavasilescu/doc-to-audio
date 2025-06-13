@@ -22,7 +22,7 @@ const Header = styled.header`
 
 const Logo = styled.div`
   font-size: 1.8rem;
-  font-weight: bold;
+  font-weight: 900;
   color: #192BC2;
   display: flex;
   align-items: center;
@@ -268,6 +268,31 @@ const Wave = styled.div`
   }
 `;
 
+const FooterWave = styled.div`
+  height: 10vh;
+  background-color: #DC3545;
+  position: relative;
+
+  &:before {   
+    content: "";
+    width: 100%;
+    height: 52px;
+    position: absolute;
+    bottom: -0.3%;
+    left: 0;
+    background-size: auto;
+    background-repeat: repeat no-repeat;
+    background-position: 34vw bottom;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1200  96' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M0 70L50 66C100 62 200 53 300 36C400 18 500 -7 600 1C700 10 800 53 900 70C1000 88 1100 79 1150 75L1200 70V96H1150C1100 96 1000 96 900 96C800 96 700 96 600 96C500 96 400 96 300 96C200 96 100 96 50 96H0V70Z' fill='%23ffffff'/></svg>");
+  }
+
+  @media(max-width:850px) {
+    &:before {    
+      height: 26px
+    }  
+  }
+`;
+
 const TestimonialsSection = styled.section`
   padding: 4rem 2rem;
   background-color: #FFFFFF;
@@ -481,8 +506,8 @@ const NavigationButton = styled.button`
 `;
 
 const Footer = styled.footer`
-  background-color: #333;
-  color: #FFFFFF;
+  background-color: #FFFFFF;
+  color: #000000;
   padding: 4rem 2rem;
 `;
 
@@ -496,7 +521,7 @@ const FooterContent = styled.div`
 
 const FooterColumn = styled.div`
   h4 {
-    color: #FFFFFF;
+    color: #000000;
     margin-bottom: 1.5rem;
   }
 
@@ -510,12 +535,12 @@ const FooterColumn = styled.div`
   }
 
   a {
-    color: #CCCCCC;
+    color: #333333;
     text-decoration: none;
     transition: color 0.3s;
 
     &:hover {
-      color: #FFFFFF;
+      color: #192BC2;
     }
   }
 `;
@@ -690,9 +715,11 @@ const Landing = () => {
           Start converting your documents to audio today. It's free, fast, and secure.
         </MainSubtitle>
         <PrimaryButton style={{ fontSize: '1.2rem', padding: '1rem 2rem' }}>
-          Get Started Now
+          Get started now
         </PrimaryButton>
       </CTASection>
+
+      <FooterWave/>
 
       <Footer>
         <FooterContent>
