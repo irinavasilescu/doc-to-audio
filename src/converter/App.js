@@ -213,10 +213,24 @@ function App() {
                 ) : (
                   <div className="speech-buttons">
                     <button 
-                      className="speak-btn"
+                      className={`speak-btn ${isSpeaking ? 'playing' : ''}`}
                       onClick={isSpeaking ? stopSpeaking : speakText}
                     >
-                      {isSpeaking ? 'Stop Speaking' : 'Speak Text'}
+                      {isSpeaking ? (
+                        <>
+                          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                          </svg>
+                          Stop Speaking
+                        </>
+                      ) : (
+                        <>
+                          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 5v14l11-7z"/>
+                          </svg>
+                          Speak Text
+                        </>
+                      )}
                     </button>
                   </div>
                 )}
@@ -225,10 +239,6 @@ function App() {
           )}
         </section>
       </main>
-
-      <footer className="app-footer">
-        <p>© 2024 PDF to Speech Converter. All rights reserved.</p>
-      </footer>
     </div>
   );
 }
