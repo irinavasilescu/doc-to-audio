@@ -48,7 +48,7 @@ const PrimaryButton = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #60A0C0;
+    background-color: #150578;
   }
 `;
 
@@ -58,9 +58,9 @@ const SecondaryButton = styled(PrimaryButton)`
   border: 1px solid #192BC2;
 
   &:hover {
-    background-color: #D0EEF9;
-    color: #307090;
-    border-color: #307090;
+    background-color: #150578;
+    border: 1px solid #150578;
+    color: #FFFFFF;
   }
 `;
 
@@ -345,16 +345,24 @@ const FAQItem = styled.div`
 
 const CTASection = styled.section`
   padding: 6rem 2rem;
-  background-color: #192BC2;
+  background-color: #DC3545;
   text-align: center;
   color: #FFFFFF;
 `;
 
 const LanguagesSection = styled.section`
   padding: 4rem 2rem;
-  background-color: #FFFFFF;
+  background-color: #150578;
   text-align: center;
   position: relative;
+
+  h1 {
+    color: #FFFFFF;
+  }
+
+  p {
+    color: #FFFFFF;
+  }
 `;
 
 const LanguagesContainer = styled.div`
@@ -698,7 +706,7 @@ const Landing = () => {
 
       <CTASection>
         <MainTitle style={{ fontSize: '3rem', marginBottom: '2rem', color: '#FFFFFF' }}>
-          Ready to Transform Your Reading Experience?
+          Ready to transform your reading experience?
         </MainTitle>
         <MainSubtitle style={{ color: '#FFFFFF', marginBottom: '3rem' }}>
           Start converting your documents to audio today. It's free, fast, and secure.
