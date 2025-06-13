@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/doc-to-audio/static/css/main.1f788b9f.css",
-    "main.js": "/doc-to-audio/static/js/main.aa66c1e5.js",
-    "static/js/453.ee1ce9d2.chunk.js": "/doc-to-audio/static/js/453.ee1ce9d2.chunk.js",
-    "static/media/person_reading.png": "/doc-to-audio/static/media/person_reading.8fcd3054cb2f4f14ffe6.png",
-    "static/media/world_map.png": "/doc-to-audio/static/media/world_map.618293c9d3aea520b952.png",
-    "static/media/pdf_icon.png": "/doc-to-audio/static/media/pdf_icon.11a2d397ad3728f57231.png",
-    "index.html": "/doc-to-audio/index.html",
-    "main.1f788b9f.css.map": "/doc-to-audio/static/css/main.1f788b9f.css.map",
-    "main.aa66c1e5.js.map": "/doc-to-audio/static/js/main.aa66c1e5.js.map",
-    "453.ee1ce9d2.chunk.js.map": "/doc-to-audio/static/js/453.ee1ce9d2.chunk.js.map"
+    "main.css": "/scribbloo/static/css/main.1f788b9f.css",
+    "main.js": "/scribbloo/static/js/main.cb190c26.js",
+    "static/js/453.c8a29d9c.chunk.js": "/scribbloo/static/js/453.c8a29d9c.chunk.js",
+    "static/media/person_reading.png": "/scribbloo/static/media/person_reading.8fcd3054cb2f4f14ffe6.png",
+    "static/media/world_map.png": "/scribbloo/static/media/world_map.618293c9d3aea520b952.png",
+    "static/media/pdf_icon.png": "/scribbloo/static/media/pdf_icon.11a2d397ad3728f57231.png",
+    "index.html": "/scribbloo/index.html",
+    "main.1f788b9f.css.map": "/scribbloo/static/css/main.1f788b9f.css.map",
+    "main.cb190c26.js.map": "/scribbloo/static/js/main.cb190c26.js.map",
+    "453.c8a29d9c.chunk.js.map": "/scribbloo/static/js/453.c8a29d9c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1f788b9f.css",
-    "static/js/main.aa66c1e5.js"
+    "static/js/main.cb190c26.js"
   ]
 }
