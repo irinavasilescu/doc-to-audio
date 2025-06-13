@@ -1,5 +1,4 @@
 import './App.css';
-import Landing from './Landing';
 import { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import * as pdfjsLib from 'pdfjs-dist';
@@ -16,27 +15,24 @@ function App() {
   const [isVoiceReady, setIsVoiceReady] = useState(false);
 
   useEffect(() => {
-    // Load ResponsiveVoice script
-    const script = document.createElement('script');
-    script.src = 'https://code.responsivevoice.org/responsivevoice.js?key=1fYy7Y8L';
-    script.async = true;
-    
-    script.onload = () => {
+    // Check if ResponsiveVoice is available
+    const checkResponsiveVoice = () => {
       if (window.responsiveVoice) {
         setIsVoiceReady(true);
+      } else {
+        // If not available yet, try again in 100ms
+        setTimeout(checkResponsiveVoice, 100);
       }
     };
-    
-    script.onerror = () => {
-      setError('Failed to load speech synthesis');
-    };
 
-    document.body.appendChild(script);
+    checkResponsiveVoice();
 
     return () => {
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
+      // Clean up ResponsiveVoice
+      if (window.responsiveVoice) {
+        window.responsiveVoice.cancel();
       }
+      setIsVoiceReady(false);
     };
   }, []);
 
@@ -146,7 +142,6 @@ function App() {
 
   return (
     <div className="App">
-      <Landing />
       <div {...getRootProps()} className="dropzone">
         <input {...getInputProps()} />
         {uploadedFile ? (

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import personReadingImage from './assets/person_reading.png'; // Import the image
 import worldMapImage from './assets/world_map.png'; // Import the world map image
 import languages from './languages.ts';
@@ -530,6 +531,8 @@ const ResponsiveVoiceRef = styled.div`
 `;
 
 const Landing = () => {
+  const navigate = useNavigate();
+
   return (
     <LandingContainer>
       <Header>
@@ -538,8 +541,8 @@ const Landing = () => {
           <span style={{ color: '#192BC2' }}>bloo</span>
         </Logo>
         <Nav>
-          <SecondaryButton>Learn More</SecondaryButton>
-          <PrimaryButton>Try Now</PrimaryButton>
+          <SecondaryButton>Learn more</SecondaryButton>
+          <PrimaryButton onClick={() => navigate('/converter')}>Try now</PrimaryButton>
         </Nav>
       </Header>
 
