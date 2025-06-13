@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import App from './converter/App';
 import Landing from './landing/Landing';
 import Header from './common/Header';
@@ -11,18 +11,14 @@ const Root = () => {
         <Routes>
           <Route
             path="/"
-            element={<Navigate to="/scribbloo/home" replace />}
+            element={<Navigate to="/home" replace />}
           />
           <Route
-            path="/scribbloo"
-            element={<Navigate to="/scribbloo/home" replace />}
-          />
-          <Route
-            path="/scribbloo/home"
+            path="/home"
             element={<Landing/>}
           />
           <Route
-            path="/scribbloo/converter"
+            path="/converter"
             element={<App/>}
           />
         </Routes>
