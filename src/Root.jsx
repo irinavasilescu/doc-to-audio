@@ -14,6 +14,10 @@ const Root = () => {
             element={<Navigate to="/scribbloo/home" replace />}
           />
           <Route
+            path="/scribbloo"
+            element={<Navigate to="/scribbloo/home" replace />}
+          />
+          <Route
             path="/scribbloo/home"
             element={<Landing/>}
           />
