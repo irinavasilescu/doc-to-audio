@@ -26,9 +26,11 @@ function App() {
         const page = await pdf.getPage(i);
         const textContent = await page.getTextContent();
         const pageText = textContent.items.map(item => item.str).join(' ');
-        fullText += `Page ${i}:\n${pageText}\n\n`;
+        fullText += pageText + ' ';
       }
       
+      // Clean up extra spaces and normalize whitespace
+      fullText = fullText.replace(/\s+/g, ' ').trim();
       setExtractedText(fullText);
     } catch (err) {
       setError('Error extracting text from PDF: ' + err.message);
