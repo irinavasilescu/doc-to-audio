@@ -511,45 +511,32 @@ const Footer = styled.footer`
   padding: 4rem 2rem;
 `;
 
-const FooterContent = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 3rem;
-`;
-
-const FooterColumn = styled.div`
-  h4 {
-    color: #000000;
-    margin-bottom: 1.5rem;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  li {
-    margin-bottom: 0.8rem;
-  }
+const SocialLinks = styled.div`
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
 
   a {
-    color: #333333;
-    text-decoration: none;
-    transition: color 0.3s;
-
-    &:hover {
-      color: #192BC2;
-    }
+    color: #192BC2;
+    font-size: 1.5rem;
   }
+`;
+
+const ResponsiveVoiceRef = styled.div`
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
 `;
 
 const Landing = () => {
   return (
     <LandingContainer>
       <Header>
-        <Logo>Scribbloo</Logo>
+        <Logo>
+          <span style={{ color: '#DC3545' }}>Scrib</span>
+          <span style={{ color: '#192BC2' }}>bloo</span>
+        </Logo>
         <Nav>
           <SecondaryButton>Learn More</SecondaryButton>
           <PrimaryButton>Try Now</PrimaryButton>
@@ -722,32 +709,20 @@ const Landing = () => {
       <FooterWave/>
 
       <Footer>
-        <FooterContent>
-          <FooterColumn>
-            <h4>Product</h4>
-            <ul>
-              <li><a href="#features">Features</a></li>
-              <li><a href="#pricing">Pricing</a></li>
-              <li><a href="#faq">FAQ</a></li>
-            </ul>
-          </FooterColumn>
-          <FooterColumn>
-            <h4>Company</h4>
-            <ul>
-              <li><a href="#about">About Us</a></li>
-              <li><a href="#contact">Contact</a></li>
-              <li><a href="#privacy">Privacy Policy</a></li>
-            </ul>
-          </FooterColumn>
-          <FooterColumn>
-            <h4>Resources</h4>
-            <ul>
-              <li><a href="#blog">Blog</a></li>
-              <li><a href="#support">Support</a></li>
-              <li><a href="#documentation">Documentation</a></li>
-            </ul>
-          </FooterColumn>
-        </FooterContent>
+        <SocialLinks>
+          <a href="https://www.linkedin.com/in/irina-alexandra-vasilescu-a40176192/" target="_blank" rel="noopener noreferrer">
+            <i className="fab fa-linkedin"></i>
+          </a>
+          <a href="https://www.goodreads.com/user/show/58575151-irina-vasilescu" target="_blank" rel="noopener noreferrer">
+            <i className="fab fa-goodreads"></i>
+          </a>
+          <a href="https://github.com/irinavasilescu" target="_blank" rel="noopener noreferrer">
+            <i className="fab fa-github"></i>
+          </a>
+        </SocialLinks>
+        <ResponsiveVoiceRef>
+          Text-to-speech powered by <a href="https://responsivevoice.org/" rel="noopener noreferrer nofollow" target="_blank">ResponsiveVoice</a>
+        </ResponsiveVoiceRef>
       </Footer>
     </LandingContainer>
   );
