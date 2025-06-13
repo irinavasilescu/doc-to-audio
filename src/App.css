@@ -88,3 +88,39 @@
 .remove-file:hover {
   background-color: #c82333;
 }
+
+.loading {
+  margin: 20px auto;
+  color: #666;
+}
+
+.error {
+  margin: 20px auto;
+  padding: 15px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border-radius: 4px;
+  max-width: 600px;
+}
+
+.extracted-text {
+  margin: 20px auto;
+  max-width: 800px;
+  text-align: left;
+}
+
+.extracted-text h3 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.text-content {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  font-family: monospace;
+  max-height: 500px;
+  overflow-y: auto;
+  border: 1px solid #dee2e6;
+}
