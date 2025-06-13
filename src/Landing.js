@@ -292,7 +292,7 @@ const TestimonialCard = styled.div`
   &:before {
     content: '"';
     font-size: 4rem;
-    color: #192BC2;
+    color: #DC3545;
     opacity: 0.2;
     position: absolute;
     top: -1rem;
@@ -308,7 +308,7 @@ const TestimonialCard = styled.div`
 
   .author {
     font-weight: bold;
-    color: #192BC2;
+    color: #DC3545;
   }
 `;
 
@@ -354,39 +354,124 @@ const LanguagesSection = styled.section`
   padding: 4rem 2rem;
   background-color: #FFFFFF;
   text-align: center;
+  position: relative;
+`;
+
+const LanguagesContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  padding: 0 3rem;
 `;
 
 const LanguagesGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  display: flex;
   gap: 1.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  margin-top: 3rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 1rem 0;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const LanguageCard = styled.div`
-  background-color: #F8F8F8;
-  padding: 1rem;
-  border-radius: 8px;
-  transition: transform 0.3s;
+  background-color: #FFFFFF;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  font-size: 14px;
+  gap: 1rem;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  min-width: 180px;
+  flex-shrink: 0;
 
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(25, 43, 194, 0.1);
+    border-color: #192BC2;
+  }
+
+  .flag {
+    font-size: 2rem;
   }
 
   p {
     color: #192BC2;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 1rem;
     margin: 0;
+    white-space: nowrap;
+  }
+`;
+
+const NavigationButton = styled.button`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #192BC2;
+    border-color: #192BC2;
+    color: #FFFFFF;
+  }
+
+  &.prev {
+    left: 0;
+  }
+
+  &.next {
+    right: 0;
+  }
+`;
+
+const LanguageGroups = styled.div`
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+`;
+
+const LanguageGroup = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  background: #F8F9FA;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #192BC2;
+    color: #FFFFFF;
   }
 
   .flag {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+  }
+
+  span {
+    font-size: 0.9rem;
+    font-weight: 500;
   }
 `;
 
@@ -522,36 +607,73 @@ const Landing = () => {
 
       <TestimonialsSection>
         <MainTitle style={{ fontSize: '3rem', marginBottom: '2rem' }}>
-          What Our Users Say
+          What our users say
         </MainTitle>
         <TestimonialsGrid>
           <TestimonialCard>
-            <p>"This app has been a game-changer for my commute. I can now listen to my research papers while driving!"</p>
-            <div className="author">- Sarah M., Researcher</div>
+            <p>"I love how I can listen to my favorite books while cooking dinner. It's made our evenings together so much more enjoyable!"</p>
+            <div className="author">- My boyfriend</div>
           </TestimonialCard>
           <TestimonialCard>
-            <p>"As someone with dyslexia, this tool has made reading academic papers so much easier. Highly recommended!"</p>
-            <div className="author">- James K., Student</div>
+            <p>"As someone who's always on the go, this app has been a lifesaver. I can finally keep up with my reading during my daily commute."</p>
+            <div className="author">- My dad</div>
           </TestimonialCard>
           <TestimonialCard>
-            <p>"The multilingual support is fantastic. I can practice my language skills by listening to documents in different languages."</p>
-            <div className="author">- Maria L., Language Learner</div>
+            <p>"I was skeptical at first, but now I'm hooked! The voice quality is amazing and it's so easy to use. Perfect for my busy lifestyle."</p>
+            <div className="author">- My best friend</div>
           </TestimonialCard>
         </TestimonialsGrid>
       </TestimonialsSection>
 
       <LanguagesSection>
-        <MainTitle style={{ fontSize: '3rem', marginBottom: '2rem' }}>
+        <MainTitle style={{ fontSize: '3rem', marginBottom: '1rem' }}>
           Supported Languages
         </MainTitle>
-        <LanguagesGrid>
-          {languages.map((language) => (
-            <LanguageCard key={language}>
-              <span className="flag">{flags[language]}</span>
-              <p>{language}</p>
-            </LanguageCard>
-          ))}
-        </LanguagesGrid>
+        <MainSubtitle style={{ maxWidth: '800px', margin: '0 auto 2rem' }}>
+          Break language barriers with our AI-powered voice synthesis in 30+ languages. Your content, your language, your voice.
+        </MainSubtitle>
+        
+        <LanguagesContainer>
+          <NavigationButton className="prev" onClick={() => {
+            const container = document.querySelector('.languages-grid');
+            container.scrollLeft -= 200;
+          }}>
+            ←
+          </NavigationButton>
+          <LanguagesGrid className="languages-grid">
+            {languages.map((language) => (
+              <LanguageCard key={language}>
+                <span className="flag">{flags[language]}</span>
+                <p>{language}</p>
+              </LanguageCard>
+            ))}
+          </LanguagesGrid>
+          <NavigationButton className="next" onClick={() => {
+            const container = document.querySelector('.languages-grid');
+            container.scrollLeft += 200;
+          }}>
+            →
+          </NavigationButton>
+        </LanguagesContainer>
+
+        <LanguageGroups>
+          <LanguageGroup>
+            <span className="flag">🌍</span>
+            <span>All Languages</span>
+          </LanguageGroup>
+          <LanguageGroup>
+            <span className="flag">🇪🇺</span>
+            <span>European</span>
+          </LanguageGroup>
+          <LanguageGroup>
+            <span className="flag">🌏</span>
+            <span>Asian</span>
+          </LanguageGroup>
+          <LanguageGroup>
+            <span className="flag">🌎</span>
+            <span>American</span>
+          </LanguageGroup>
+        </LanguageGroups>
       </LanguagesSection>
 
       <FAQSection>
