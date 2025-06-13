@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import flags from './../values/flags.ts';
 import translationLanguages from './../values/translationLanguages.ts';
 
@@ -18,6 +19,7 @@ const Logo = styled.div`
   color: #192BC2;
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   img {
     height: 30px;
@@ -89,6 +91,7 @@ const LanguageOption = styled.div`
 `;
 
 const Header = () => {
+  const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('English');
 
@@ -109,7 +112,7 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <Logo>
+      <Logo onClick={() => navigate('/')}>
         <span style={{ color: '#DC3545' }}>Scrib</span>
         <span style={{ color: '#192BC2' }}>bloo</span>
       </Logo>
