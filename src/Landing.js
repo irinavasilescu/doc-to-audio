@@ -48,6 +48,7 @@ const PrimaryButton = styled.button`
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-weight: bold;
 
   &:hover {
     background-color: #150578;
@@ -58,6 +59,7 @@ const SecondaryButton = styled(PrimaryButton)`
   background-color: #FFFFFF;
   color: #192BC2; /* Explore Course List blue */
   border: 1px solid #192BC2;
+  font-weight: bold;
 
   &:hover {
     background-color: #150578;
@@ -533,6 +535,13 @@ const ResponsiveVoiceRef = styled.div`
 const Landing = () => {
   const navigate = useNavigate();
 
+  const scrollToStats = () => {
+    const statsSection = document.getElementById('stats-section');
+    if (statsSection) {
+      statsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <LandingContainer>
       <Header>
@@ -541,7 +550,7 @@ const Landing = () => {
           <span style={{ color: '#192BC2' }}>bloo</span>
         </Logo>
         <Nav>
-          <SecondaryButton>Learn more</SecondaryButton>
+          <SecondaryButton onClick={scrollToStats}>Learn more</SecondaryButton>
           <PrimaryButton onClick={() => navigate('/converter')}>Try now</PrimaryButton>
         </Nav>
       </Header>
@@ -560,7 +569,7 @@ const Landing = () => {
             <img src={personReadingImage} alt="Person reading and listening" style={{ maxWidth: '100%', height: 'auto', filter: 'drop-shadow(0 15px 45px rgba(14, 14, 82, 0.2))' }} />
           </ImagePlaceholder>
         </HeroContent>
-        <StatsContainer>
+        <StatsContainer id="stats-section">
           <StatItem>
             <h3>Fast</h3>
             <p>Get started instantly. Just upload your PDF and start listening. No signups and no complicated setup. It's as easy as hitting "Play".</p>
