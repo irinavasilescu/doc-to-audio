@@ -141,7 +141,7 @@ function App() {
   });
 
   return (
-    <div className="App">
+    <>
       <div {...getRootProps()} className="dropzone">
         <input {...getInputProps()} />
         {uploadedFile ? (
@@ -202,7 +202,7 @@ function App() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
