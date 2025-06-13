@@ -13,8 +13,6 @@ function App() {
   const [error, setError] = useState(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isVoiceReady, setIsVoiceReady] = useState(false);
-  const [currentSection, setCurrentSection] = useState(0);
-  const [textSections, setTextSections] = useState([]);
 
   useEffect(() => {
     // Load ResponsiveVoice script
@@ -41,72 +39,20 @@ function App() {
     };
   }, []);
 
-  // Split text into sections when extractedText changes
-  useEffect(() => {
-    if (extractedText) {
-      // Split text into smaller chunks (approximately 2-3 sentences each)
-      const sentences = extractedText.match(/[^.!?]+[.!?]+/g) || [];
-      const sections = [];
-      let currentSection = '';
-      
-      for (const sentence of sentences) {
-        if ((currentSection + sentence).length > 200) {
-          if (currentSection) sections.push(currentSection.trim());
-          currentSection = sentence;
-        } else {
-          currentSection += ' ' + sentence;
-        }
-      }
-      
-      if (currentSection) {
-        sections.push(currentSection.trim());
-      }
-      
-      setTextSections(sections);
-      setCurrentSection(0);
-    }
-  }, [extractedText]);
-
-  const speakNextSection = useCallback(() => {
-    if (!isSpeaking || currentSection >= textSections.length) {
-      setIsSpeaking(false);
-      setCurrentSection(0);
-      return;
-    }
-
-    const section = textSections[currentSection];
-    if (!section) {
-      setCurrentSection(prev => prev + 1);
-      return;
-    }
-
-    window.responsiveVoice.speak(section, "US English Female", {
-      onend: () => {
-        setCurrentSection(prev => prev + 1);
-      },
-      onerror: () => {
-        setError('Error playing speech');
-        setIsSpeaking(false);
-      }
-    });
-  }, [currentSection, textSections, isSpeaking]);
-
-  // Effect to handle section progression
-  useEffect(() => {
-    if (isSpeaking && currentSection < textSections.length) {
-      speakNextSection();
-    } else if (currentSection >= textSections.length) {
-      setIsSpeaking(false);
-      setCurrentSection(0);
-    }
-  }, [currentSection, isSpeaking, textSections.length, speakNextSection]);
-
   const speakText = () => {
-    if (!extractedText || !isVoiceReady || textSections.length === 0) return;
+    if (!extractedText || !isVoiceReady) return;
 
     try {
       setIsSpeaking(true);
-      setCurrentSection(0);
+      window.responsiveVoice.speak(extractedText, "US English Female", {
+        onend: () => {
+          setIsSpeaking(false);
+        },
+        onerror: () => {
+          setError('Error playing speech');
+          setIsSpeaking(false);
+        }
+      });
     } catch (err) {
       setError('Error playing speech: ' + err.message);
       setIsSpeaking(false);
@@ -117,7 +63,6 @@ function App() {
     if (window.responsiveVoice) {
       window.responsiveVoice.cancel();
       setIsSpeaking(false);
-      setCurrentSection(0);
     }
   };
 
@@ -214,8 +159,6 @@ function App() {
                 setExtractedText('');
                 setError(null);
                 stopSpeaking();
-                setTextSections([]);
-                setCurrentSection(0);
               }}
             >
               Remove file
@@ -257,11 +200,6 @@ function App() {
                 >
                   {isSpeaking ? 'Stop Speaking' : 'Speak Text'}
                 </button>
-                {isSpeaking && (
-                  <div className="progress">
-                    Section {currentSection + 1} of {textSections.length}
-                  </div>
-                )}
               </div>
             )}
           </div>
