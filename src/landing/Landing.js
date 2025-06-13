@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import personReadingImage from './assets/person_reading.png'; // Import the image
-import worldMapImage from './assets/world_map.png'; // Import the world map image
-import languages from './languages.ts';
-import translationLanguages from './translationLanguages.ts';
-import flags from './flags.ts';
+import personReadingImage from './../assets/person_reading.png'; // Import the image
+import worldMapImage from './../assets/world_map.png'; // Import the world map image
+import languages from '../values/languages.ts';
+import translationLanguages from '../values/translationLanguages.ts';
+import flags from '../values/flags.ts';
 import { useState, useEffect } from 'react';
 
 const LandingContainer = styled.div`
