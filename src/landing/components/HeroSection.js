@@ -62,6 +62,10 @@ const ButtonContainer = styled.div`
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
+
+  @media (max-width: 900px) {
+    justify-content: center;
+  }
 `;
 
 const PrimaryButton = styled.button`
