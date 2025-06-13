@@ -126,6 +126,7 @@ const StatsContainer = styled.div`
   background-color: #DC3545;
   padding: 4rem;
   border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(220, 53, 69, 0.5);
 
   @media (max-width: 900px) {
     flex-direction: column;
@@ -222,7 +223,7 @@ const Landing = () => {
             </MainSubtitle>
           </TextContent>
           <ImagePlaceholder>
-            <img src={personReadingImage} alt="Person reading and listening" style={{ maxWidth: '100%', height: 'auto' }} />
+            <img src={personReadingImage} alt="Person reading and listening" style={{ maxWidth: '100%', height: 'auto', filter: 'drop-shadow(0 15px 45px rgba(14, 14, 82, 0.2))' }} />
           </ImagePlaceholder>
         </HeroContent>
         <StatsContainer>
@@ -246,7 +247,9 @@ const Landing = () => {
       </HeroSection>
 
       <AppFeaturesSection>
-        <MainTitle style={{ fontSize: '3rem', marginBottom: '2rem' }}>What Our App Can Do</MainTitle>
+        <MainTitle style={{ fontSize: '3rem', marginBottom: '2rem' }}>
+            <span>How does it work?</span>
+        </MainTitle>
         <AppFeaturesGrid>
           <AppFeatureCard>
             <h3>1. Upload Your PDF</h3>
