@@ -25,12 +25,42 @@ function App() {
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
         const textContent = await page.getTextContent();
-        const pageText = textContent.items.map(item => item.str).join(' ');
-        fullText += pageText + ' ';
+        
+        // Preserve the original text items with their positions
+        const items = textContent.items;
+        let lastY = null;
+        let lastX = null;
+        
+        for (const item of items) {
+          const currentY = item.transform[5];
+          const currentX = item.transform[4];
+          
+          // Add newline when y position changes significantly (new line in PDF)
+          if (lastY !== null && Math.abs(lastY - currentY) > 5) {
+            fullText += '\n';
+          }
+          // Add space when x position changes significantly (new word in PDF)
+          else if (lastX !== null && Math.abs(lastX - currentX) > 5) {
+            fullText += ' ';
+          }
+          
+          // Skip if the text is just a page number (usually at the bottom of the page)
+          const isPageNumber = /^\d+$/.test(item.str.trim());
+          if (!isPageNumber) {
+            fullText += item.str;
+          }
+          
+          lastY = currentY;
+          lastX = currentX;
+        }
       }
       
-      // Clean up extra spaces and normalize whitespace
-      fullText = fullText.replace(/\s+/g, ' ').trim();
+      // Clean up the text while preserving formatting
+      fullText = fullText
+        .replace(/\n{3,}/g, '\n\n')  // Replace 3+ newlines with 2
+        .replace(/\n\s*\n/g, '\n\n') // Remove empty lines with only spaces
+        .trim();
+      
       setExtractedText(fullText);
     } catch (err) {
       setError('Error extracting text from PDF: ' + err.message);
