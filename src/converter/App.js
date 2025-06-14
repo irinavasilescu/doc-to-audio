@@ -333,46 +333,74 @@ function App() {
               <section className="hero-section">
                 <div className="hero-content">
                   <h2>
-                    <span>3. Select language for speech</span>
+                    <span>3. Select language and listen</span>
                   </h2>
                 </div>
               </section>
-              <div className="language-selector">
-                <LanguageDropdown
-                  selectedLanguage={selectedLanguage}
-                  onLanguageChange={(language) => setSelectedLanguage(language)}
-                  languageOptions={voiceLanguageOptions}
-                  direction="up"
-                />
-              </div>
-              <div className="speech-controls">
-                {!isVoiceReady ? (
-                  <p className="voice-loading">Loading speech synthesis...</p>
-                ) : (
-                  <div className="speech-buttons">
-                    <button 
-                      className={`speak-btn ${isSpeaking ? 'playing' : ''}`}
-                      onClick={isSpeaking ? stopSpeaking : speakText}
-                    >
-                      {isSpeaking ? (
-                        <>
-                          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                          </svg>
-                          Stop Speaking
-                        </>
-                      ) : (
-                        <>
-                          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 5v14l11-7z"/>
-                          </svg>
-                          Speak Text
-                        </>
-                      )}
-                    </button>
+              <div className="speech-settings-container">
+                <div className="language-section">
+                  <div className="section-header">
+                    <h3>Select Voice</h3>
+                    <p className="section-description">Choose your preferred voice and accent</p>
                   </div>
-                )}
+                  <div className="language-selector">
+                    <LanguageDropdown
+                      selectedLanguage={selectedLanguage}
+                      onLanguageChange={(language) => setSelectedLanguage(language)}
+                      languageOptions={voiceLanguageOptions}
+                      direction="up"
+                    />
+                  </div>
+                </div>
+
+                <div className="listening-section">
+                  <div className="section-header">
+                    <h3>Listening Controls</h3>
+                    <p className="section-description">Control playback and adjust settings</p>
+                  </div>
+                  <div className="speech-controls">
+                    {!isVoiceReady ? (
+                      <div className="voice-loading-container">
+                        <div className="loading-spinner"></div>
+                        <p className="voice-loading">Loading speech synthesis...</p>
+                      </div>
+                    ) : (
+                      <div className="speech-buttons">
+                        <button 
+                          className={`speak-btn ${isSpeaking ? 'playing' : ''}`}
+                          onClick={isSpeaking ? stopSpeaking : speakText}
+                        >
+                          {isSpeaking ? (
+                            <>
+                              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                              </svg>
+                              Stop Speaking
+                            </>
+                          ) : (
+                            <>
+                              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 5v14l11-7z"/>
+                              </svg>
+                              Speak Text
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
+              {isSpeaking && (
+                <div className="speaking-indicator">
+                  <div className="sound-waves">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <p>Speaking in {selectedLanguage}</p>
+                </div>
+              )}
             </div>
           )}
         </section>
