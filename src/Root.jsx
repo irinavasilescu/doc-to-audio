@@ -1,12 +1,12 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import App from './converter/App';
 import Landing from './landing/Landing';
 import Header from './common/Header';
 
 const Root = () => {
   return (
-    <Router>
+    <Router basename="/scribbloo">
       <Header />
         <Routes>
           <Route
