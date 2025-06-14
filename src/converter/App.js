@@ -571,15 +571,27 @@ function App() {
                 </div>
               </section>
               <div className="speech-settings-container">
-                <div className="language-section">
-                  <div className="language-selector">
-                    <LanguageDropdown
-                      selectedLanguage={selectedLanguage}
-                      onLanguageChange={(language) => setSelectedLanguage(language)}
-                      languageOptions={voiceLanguageOptions}
-                      direction="up"
-                    />
+                <div className="language-and-status-row">
+                  <div className="language-section">
+                    <div className="language-selector">
+                      <LanguageDropdown
+                        selectedLanguage={selectedLanguage}
+                        onLanguageChange={(language) => setSelectedLanguage(language)}
+                        languageOptions={voiceLanguageOptions}
+                        direction="up"
+                      />
+                    </div>
                   </div>
+                  {isSpeaking && (
+                    <div className="speaking-indicator">
+                      <div className="sound-waves">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                      </div>
+                      <p>Listening to {uploadedFile ? uploadedFile.name : 'your text'}</p>
+                    </div>
+                  )}
                 </div>
 
                 <div className="listening-section">
@@ -663,16 +675,6 @@ function App() {
                   </div>
                 </div>
               </div>
-              {isSpeaking && (
-                <div className="speaking-indicator">
-                  <div className="sound-waves">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
-                  <p>Listening to {uploadedFile ? uploadedFile.name : 'your text'}</p>
-                </div>
-              )}
             </div>
           )}
         </section>
