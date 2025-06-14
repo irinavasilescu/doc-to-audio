@@ -1,5 +1,5 @@
 import './App.css';
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
 import * as pdfjsLib from 'pdfjs-dist';
 import document from '../assets/document.png';
@@ -21,10 +21,20 @@ function App() {
   const [error, setError] = useState(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isVoiceReady, setIsVoiceReady] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [isTextInputMode, setIsTextInputMode] = useState(false);
   const [inputText, setInputText] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState(voiceLanguageOptions[2].name); // US English Female
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const progressBarRef = useRef(null);
+  const progressInterval = useRef(null);
+  const startTimeRef = useRef(null);
+  const seekPositionRef = useRef(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [visualProgress, setVisualProgress] = useState(0);
 
   useEffect(() => {
     // Check if ResponsiveVoice is available
@@ -40,32 +50,99 @@ function App() {
     checkResponsiveVoice();
 
     return () => {
-      // Clean up ResponsiveVoice
+      // Clean up ResponsiveVoice and intervals
       if (window.responsiveVoice) {
         window.responsiveVoice.cancel();
+      }
+      if (progressInterval.current) {
+        clearInterval(progressInterval.current);
       }
       setIsVoiceReady(false);
     };
   }, []);
+
+  const resetProgressTracking = () => {
+    if (progressInterval.current) {
+      clearInterval(progressInterval.current);
+      progressInterval.current = null;
+    }
+    startTimeRef.current = null;
+    seekPositionRef.current = 0;
+  };
+
+  const startProgressTracking = (startPosition) => {
+    resetProgressTracking();
+    
+    startTimeRef.current = Date.now();
+    seekPositionRef.current = startPosition;
+    
+    progressInterval.current = setInterval(() => {
+      if (window.responsiveVoice && window.responsiveVoice.isPlaying()) {
+        const elapsed = (Date.now() - startTimeRef.current) / 1000;
+        const newTime = Math.min(seekPositionRef.current + elapsed, duration);
+        setCurrentTime(newTime);
+        setVisualProgress(newTime / duration);
+      }
+    }, 100);
+  };
+
+  const stopProgressTracking = () => {
+    resetProgressTracking();
+  };
 
   const speakText = () => {
     if (!extractedText || !isVoiceReady) return;
 
     try {
       setIsSpeaking(true);
+      setIsPaused(false);
       const selectedVoice = voiceLanguageOptions.find(option => option.name === selectedLanguage);
+      
+      // Estimate duration based on text length (rough estimate)
+      const estimatedDuration = extractedText.length * 0.05; // 50ms per character
+      setDuration(estimatedDuration);
+      setCurrentTime(0);
+      setProgress(0);
+      
       window.responsiveVoice.speak(extractedText, selectedVoice.code, {
+        onstart: () => {
+          startProgressTracking(0);
+        },
         onend: () => {
           setIsSpeaking(false);
+          setIsPaused(false);
+          setProgress(1);
+          setCurrentTime(duration);
+          stopProgressTracking();
         },
         onerror: () => {
           setError('Error playing speech');
           setIsSpeaking(false);
+          setIsPaused(false);
+          stopProgressTracking();
         }
       });
     } catch (err) {
       setError('Error playing speech: ' + err.message);
       setIsSpeaking(false);
+      setIsPaused(false);
+      stopProgressTracking();
+    }
+  };
+
+  const pauseSpeaking = () => {
+    if (window.responsiveVoice) {
+      window.responsiveVoice.pause();
+      setIsPaused(true);
+      stopProgressTracking();
+    }
+  };
+
+  const resumeSpeaking = () => {
+    if (window.responsiveVoice) {
+      window.responsiveVoice.resume();
+      setIsPaused(false);
+      startProgressTracking(currentTime);
     }
   };
 
@@ -73,7 +150,79 @@ function App() {
     if (window.responsiveVoice) {
       window.responsiveVoice.cancel();
       setIsSpeaking(false);
+      setIsPaused(false);
+      setProgress(0);
+      setCurrentTime(0);
+      stopProgressTracking();
     }
+  };
+
+  const skipForward = () => {
+    if (window.responsiveVoice && isSpeaking) {
+      const newTime = Math.min(currentTime + 5, duration);
+      // Calculate approximate character position (20 chars per second)
+      const charPosition = Math.floor(newTime * 20);
+      const remainingText = extractedText.substring(charPosition);
+      
+      // Stop current playback
+      window.responsiveVoice.cancel();
+      
+      // Start new playback from the new position
+      const selectedVoice = voiceLanguageOptions.find(option => option.name === selectedLanguage);
+      window.responsiveVoice.speak(remainingText, selectedVoice.code, {
+        onstart: () => {
+          startTimeRef.current = Date.now() - (newTime * 1000);
+          startProgressTracking(newTime);
+        },
+        onend: () => {
+          setIsSpeaking(false);
+          setIsPaused(false);
+          setProgress(1);
+          setCurrentTime(duration);
+          stopProgressTracking();
+        }
+      });
+      
+      setCurrentTime(newTime);
+      setProgress(newTime / duration);
+    }
+  };
+
+  const skipBackward = () => {
+    if (window.responsiveVoice && isSpeaking) {
+      const newTime = Math.max(currentTime - 5, 0);
+      // Calculate approximate character position (20 chars per second)
+      const charPosition = Math.floor(newTime * 20);
+      const remainingText = extractedText.substring(charPosition);
+      
+      // Stop current playback
+      window.responsiveVoice.cancel();
+      
+      // Start new playback from the new position
+      const selectedVoice = voiceLanguageOptions.find(option => option.name === selectedLanguage);
+      window.responsiveVoice.speak(remainingText, selectedVoice.code, {
+        onstart: () => {
+          startTimeRef.current = Date.now() - (newTime * 1000);
+          startProgressTracking(newTime);
+        },
+        onend: () => {
+          setIsSpeaking(false);
+          setIsPaused(false);
+          setProgress(1);
+          setCurrentTime(duration);
+          stopProgressTracking();
+        }
+      });
+      
+      setCurrentTime(newTime);
+      setProgress(newTime / duration);
+    }
+  };
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
   const extractTextFromPDF = async (file) => {
@@ -230,6 +379,90 @@ function App() {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const handleProgressBarClick = (e) => {
+    if (!progressBarRef.current) return;
+    
+    const rect = progressBarRef.current.getBoundingClientRect();
+    const clickPosition = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    const newTime = clickPosition * duration;
+    
+    seekToPosition(newTime);
+  };
+
+  const handleThumbMouseDown = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging || !progressBarRef.current) return;
+    
+    const rect = progressBarRef.current.getBoundingClientRect();
+    const clickPosition = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    const newTime = clickPosition * duration;
+    
+    setCurrentTime(newTime);
+    setVisualProgress(clickPosition);
+  };
+
+  const handleMouseUp = () => {
+    if (!isDragging) return;
+    
+    setIsDragging(false);
+    seekToPosition(currentTime);
+  };
+
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging]);
+
+  const seekToPosition = (newTime) => {
+    if (!window.responsiveVoice) return;
+    
+    const charPosition = Math.floor(newTime * 20);
+    const remainingText = extractedText.substring(charPosition);
+    
+    window.responsiveVoice.cancel();
+    setCurrentTime(newTime);
+    setVisualProgress(newTime / duration);
+    
+    const selectedVoice = voiceLanguageOptions.find(option => option.name === selectedLanguage);
+    window.responsiveVoice.speak(remainingText, selectedVoice.code, {
+      onstart: () => {
+        setIsSpeaking(true);
+        startProgressTracking(newTime);
+      },
+      onend: () => {
+        setIsSpeaking(false);
+        setIsPaused(false);
+        setVisualProgress(1);
+        setCurrentTime(duration);
+        stopProgressTracking();
+      },
+      onerror: () => {
+        setIsSpeaking(false);
+        setIsPaused(false);
+        setError('Error playing speech');
+        stopProgressTracking();
+      }
+    });
+  };
+
+  useEffect(() => {
+    return () => {
+      stopProgressTracking();
+    };
+  }, []);
+
   return (
     <div className="app-container">
       <main className="main-content">
@@ -365,27 +598,74 @@ function App() {
                         <p className="voice-loading">Loading speech synthesis...</p>
                       </div>
                     ) : (
-                      <div className="speech-buttons">
-                        <button 
-                          className={`speak-btn ${isSpeaking ? 'playing' : ''}`}
-                          onClick={isSpeaking ? stopSpeaking : speakText}
-                        >
-                          {isSpeaking ? (
-                            <>
-                              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                              </svg>
-                              Stop
-                            </>
-                          ) : (
-                            <>
-                              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <div className="audio-player">
+                        <div className="progress-container">
+                          <div className="time current">{formatTime(currentTime)}</div>
+                          <div 
+                            className="progress-bar"
+                            ref={progressBarRef}
+                            onClick={handleProgressBarClick}
+                          >
+                            <div 
+                              className="progress" 
+                              style={{ width: `${visualProgress * 100}%` }}
+                            />
+                            <div 
+                              className="progress-thumb"
+                              style={{ left: `${visualProgress * 100}%` }}
+                              onMouseDown={handleThumbMouseDown}
+                            />
+                          </div>
+                          <div className="time total">{formatTime(duration)}</div>
+                        </div>
+                        <div className="player-controls">
+                          <button 
+                            className="control-btn play"
+                            onClick={!isSpeaking ? speakText : (isPaused ? resumeSpeaking : pauseSpeaking)}
+                            disabled={!extractedText}
+                            title={!isSpeaking ? "Play" : (isPaused ? "Resume" : "Pause")}
+                          >
+                            <svg viewBox="0 0 24 24">
+                              {!isSpeaking ? (
                                 <path d="M8 5v14l11-7z"/>
-                              </svg>
-                              Start
-                            </>
-                          )}
-                        </button>
+                              ) : isPaused ? (
+                                <path d="M8 5v14l11-7z"/>
+                              ) : (
+                                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                              )}
+                            </svg>
+                          </button>
+                          <button 
+                            className="control-btn stop"
+                            onClick={stopSpeaking}
+                            disabled={!isSpeaking}
+                            title="Stop"
+                          >
+                            <svg viewBox="0 0 24 24">
+                              <path d="M6 6h12v12H6z"/>
+                            </svg>
+                          </button>
+                          <button 
+                            className="control-btn skip-backward"
+                            onClick={skipBackward}
+                            disabled={!isSpeaking}
+                            title="Skip backward 5 seconds"
+                          >
+                            <svg viewBox="0 0 24 24">
+                              <path d="M11.5 12l8.5 6V6l-8.5 6z"/>
+                            </svg>
+                          </button>
+                          <button 
+                            className="control-btn skip-forward"
+                            onClick={skipForward}
+                            disabled={!isSpeaking}
+                            title="Skip forward 5 seconds"
+                          >
+                            <svg viewBox="0 0 24 24">
+                              <path d="M4 18l8.5-6L4 6v12z"/>
+                            </svg>
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>

@@ -528,19 +528,30 @@ body {
 
 .voice-loading-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  background: #f1f5f9;
-  border-radius: 8px;
-  color: #64748b;
-  border: 1px solid #e5e7eb;
+  gap: 10px;
+  padding: 20px;
+}
+
+.loading-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #4CAF50;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .voice-loading {
-  color: #64748b;
+  color: #666;
+  font-size: 14px;
   margin: 0;
-  font-size: 0.95rem;
 }
 
 .speech-buttons {
@@ -680,5 +691,118 @@ body {
   .speaking-indicator {
     margin: 1.5rem 1rem;
   }
+}
+
+.audio-player {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.time {
+  font-size: 14px;
+  color: #666;
+  min-width: 45px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  background: #e0e0e0;
+  border-radius: 3px;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: #4CAF50;
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+.progress-thumb {
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  background: #4CAF50;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.progress-thumb:active {
+  cursor: grabbing;
+}
+
+.player-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.control-btn {
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.control-btn:hover:not(:disabled) {
+  background: #f0f0f0;
+  transform: scale(1.1);
+}
+
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.control-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: #333;
+}
+
+.control-btn.play svg,
+.control-btn.resume svg {
+  fill: #4CAF50;
+}
+
+.control-btn.pause svg {
+  fill: #FFA000;
+}
+
+.control-btn.stop svg {
+  fill: #F44336;
+}
+
+.control-btn.skip-forward svg,
+.control-btn.skip-backward svg {
+  fill: #2196F3;
 }
 
