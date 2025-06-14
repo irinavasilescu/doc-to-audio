@@ -168,7 +168,7 @@ const HeroSection = () => {
           </MainSubtitle>
           <ButtonContainer>
             <SecondaryButton onClick={scrollToStats}>Learn more</SecondaryButton>
-            <PrimaryButton onClick={() => navigate('/converter')}>Try now</PrimaryButton>
+            <PrimaryButton onClick={() => navigate('/scribbloo/converter')}>Try now</PrimaryButton>
           </ButtonContainer>
         </TextContent>
         <ImagePlaceholder>

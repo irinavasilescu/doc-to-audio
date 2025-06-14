@@ -10,15 +10,15 @@ const Root = () => {
       <Header />
         <Routes>
           <Route
-            path="/"
-            element={<Navigate to="/home" replace />}
+            path="/scribbloo"
+            element={<Navigate to="/scribbloo/home" replace />}
           />
           <Route
-            path="/home"
+            path="/scribbloo/home"
             element={<Landing/>}
           />
           <Route
-            path="/converter"
+            path="/scribbloo/converter"
             element={<App/>}
           />
         </Routes>
