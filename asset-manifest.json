@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/scribbloo/static/css/main.1f788b9f.css",
-    "main.js": "/scribbloo/static/js/main.503770a2.js",
+    "main.js": "/scribbloo/static/js/main.5bf14baf.js",
     "static/js/453.c8a29d9c.chunk.js": "/scribbloo/static/js/453.c8a29d9c.chunk.js",
     "static/media/person_reading.png": "/scribbloo/static/media/person_reading.8fcd3054cb2f4f14ffe6.png",
     "static/media/world_map.png": "/scribbloo/static/media/world_map.618293c9d3aea520b952.png",
     "static/media/pdf_icon.png": "/scribbloo/static/media/pdf_icon.11a2d397ad3728f57231.png",
     "index.html": "/scribbloo/index.html",
     "main.1f788b9f.css.map": "/scribbloo/static/css/main.1f788b9f.css.map",
-    "main.503770a2.js.map": "/scribbloo/static/js/main.503770a2.js.map",
+    "main.5bf14baf.js.map": "/scribbloo/static/js/main.5bf14baf.js.map",
     "453.c8a29d9c.chunk.js.map": "/scribbloo/static/js/453.c8a29d9c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1f788b9f.css",
-    "static/js/main.503770a2.js"
+    "static/js/main.5bf14baf.js"
   ]
 }
