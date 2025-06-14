@@ -3,6 +3,10 @@ import { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import * as pdfjsLib from 'pdfjs-dist';
 import document from '../assets/document.png';
+import pdfIcon from '../assets/pdf_icon.png';
+import epubIcon from '../assets/epub_icon.png';
+import docIcon from '../assets/doc_icon.png';
+import docxIcon from '../assets/docx_icon.png';
 import { supportedFileTypes } from '../values/fileTypes';
 
 // Initialize PDF.js worker
@@ -179,6 +183,21 @@ function App() {
     }
   };
 
+  const getFileTypeIcon = (fileType) => {
+    switch (fileType) {
+      case 'application/pdf':
+        return pdfIcon;
+      case 'application/epub+zip':
+        return epubIcon;
+      case 'application/msword':
+        return docIcon;
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        return docxIcon;
+      default:
+        return document;
+    }
+  };
+
   return (
     <div className="app-container">
       <main className="main-content">
@@ -193,9 +212,20 @@ function App() {
             <input {...getInputProps()} />
             {uploadedFile ? (
               <div className="uploaded-file">
-                <p>File uploaded: {uploadedFile.name}</p>
-                <p className="file-type">Type: {getFileTypeDisplay(uploadedFile.type)}</p>
-                <p className="file-size">Size: {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB</p>
+                <div className="file-info">
+                  <img 
+                    src={getFileTypeIcon(uploadedFile.type)} 
+                    alt={`${getFileTypeDisplay(uploadedFile.type)} icon`} 
+                    className="file-type-icon"
+                  />
+                  <div className="file-details">
+                    <p className="file-name">{uploadedFile.name}</p>
+                    <div className="file-meta">
+                      <span className="file-type">{getFileTypeDisplay(uploadedFile.type)}</span>
+                      <span className="file-size">{(uploadedFile.size / 1024 / 1024).toFixed(2)} MB</span>
+                    </div>
+                  </div>
+                </div>
                 <button 
                   className="remove-file"
                   onClick={(e) => {
