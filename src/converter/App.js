@@ -19,6 +19,8 @@ function App() {
   const [error, setError] = useState(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isVoiceReady, setIsVoiceReady] = useState(false);
+  const [isTextInputMode, setIsTextInputMode] = useState(false);
+  const [inputText, setInputText] = useState('');
 
   useEffect(() => {
     // Check if ResponsiveVoice is available
@@ -198,58 +200,101 @@ function App() {
     }
   };
 
+  const handleTextInput = (e) => {
+    setInputText(e.target.value);
+    setExtractedText(e.target.value);
+  };
+
+  const switchToTextInput = () => {
+    setIsTextInputMode(true);
+    setUploadedFile(null);
+    setExtractedText('');
+    setError(null);
+    stopSpeaking();
+  };
+
+  const switchToFileUpload = () => {
+    setIsTextInputMode(false);
+    setInputText('');
+    setExtractedText('');
+    setError(null);
+    stopSpeaking();
+  };
+
   return (
     <div className="app-container">
       <main className="main-content">
         <section className="hero-section">
           <div className="hero-content">
-            <h2>1. Upload your document to get started or add your text</h2>
+            <h2>
+              {isTextInputMode ? (
+                <span>
+                  1. <span className="clickable" onClick={switchToFileUpload}>Upload your document</span> or add your text
+                </span>
+              ) : (
+                <span>
+                  1. Upload your document or <span className="clickable" onClick={switchToTextInput}>add your text</span>
+                </span>
+              )}
+            </h2>
           </div>
         </section>
 
         <section className="converter-section">
-          <div {...getRootProps()} className="dropzone">
-            <input {...getInputProps()} />
-            {uploadedFile ? (
-              <div className="uploaded-file">
-                <div className="file-info">
-                  <img 
-                    src={getFileTypeIcon(uploadedFile.type)} 
-                    alt={`${getFileTypeDisplay(uploadedFile.type)} icon`} 
-                    className="file-type-icon"
-                  />
-                  <div className="file-details">
-                    <p className="file-name">{uploadedFile.name}</p>
-                    <div className="file-meta">
-                      <span className="file-type">{getFileTypeDisplay(uploadedFile.type)}</span>
-                      <span className="file-size">{(uploadedFile.size / 1024 / 1024).toFixed(2)} MB</span>
+          {isTextInputMode ? (
+            <div className="text-input-container">
+              <textarea
+                className="text-input"
+                value={inputText}
+                onChange={handleTextInput}
+                placeholder="Paste your text here..."
+                rows={10}
+              />
+            </div>
+          ) : (
+            <div {...getRootProps()} className="dropzone">
+              <input {...getInputProps()} />
+              {uploadedFile ? (
+                <div className="uploaded-file">
+                  <div className="file-info">
+                    <img 
+                      src={getFileTypeIcon(uploadedFile.type)} 
+                      alt={`${getFileTypeDisplay(uploadedFile.type)} icon`} 
+                      className="file-type-icon"
+                    />
+                    <div className="file-details">
+                      <p className="file-name">{uploadedFile.name}</p>
+                      <div className="file-meta">
+                        <span className="file-type">{getFileTypeDisplay(uploadedFile.type)}</span>
+                        <span className="file-size">{(uploadedFile.size / 1024 / 1024).toFixed(2)} MB</span>
+                      </div>
                     </div>
                   </div>
+                  <button 
+                    className="remove-file"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setUploadedFile(null);
+                      setExtractedText('');
+                      setError(null);
+                      stopSpeaking();
+                    }}
+                  >
+                    Remove file
+                  </button>
                 </div>
-                <button 
-                  className="remove-file"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setUploadedFile(null);
-                    setExtractedText('');
-                    setError(null);
-                    stopSpeaking();
-                  }}
-                >
-                  Remove file
-                </button>
-              </div>
-            ) : isDragActive ? (
-              <p>Drop the PDF file here...</p>
-            ) : (
-              <div className="dropzone-content">
-                <div className="upload-icon">
-                  <img src={document} alt="PDF Icon" />
+              ) : isDragActive ? (
+                <p>Drop the PDF file here...</p>
+              ) : (
+                <div className="dropzone-content">
+                  <div className="upload-icon">
+                    <img src={document} alt="PDF Icon" />
+                  </div>
+                  <p>Drag and drop a PDF file here, or click to select one</p>
                 </div>
-                <p>Drag and drop a PDF file here, or click to select one</p>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          )}
 
           {isLoading && (
             <div className="loading">
