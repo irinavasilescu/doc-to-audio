@@ -2,7 +2,8 @@ import './App.css';
 import { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import * as pdfjsLib from 'pdfjs-dist';
-import pdfIcon from '../assets/pdf_icon.png';
+import document from '../assets/document.png';
+import { supportedFileTypes } from '../values/fileTypes';
 
 // Initialize PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
@@ -126,33 +127,64 @@ function App() {
     }
   };
 
+  const validateFileType = (file) => {
+    console.log('file type', file.type);
+    if (!supportedFileTypes.includes(file.type)) {
+      throw new Error('Unsupported file format');
+    }
+    return true;
+  };
+
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
-      setUploadedFile(file);
-      extractTextFromPDF(file);
+      try {
+        validateFileType(file);
+        setUploadedFile(file);
+        if (supportedFileTypes.includes(file.type)) {
+          extractTextFromPDF(file);
+        } else {
+          setError('File type not supported for text extraction');
+        }
+      } catch (err) {
+        setError(err.message);
+        setUploadedFile(null);
+        setExtractedText('');
+      }
     }
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'application/pdf': ['.pdf']
+      'application/pdf': ['.pdf'],
+      'application/epub+zip': ['.epub'],
+      'application/msword': ['.doc'],
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx']
     }
   });
 
+  const getFileTypeDisplay = (fileType) => {
+    switch (fileType) {
+      case 'application/pdf':
+        return 'PDF Document';
+      case 'application/epub+zip':
+        return 'EPUB Book';
+      case 'application/msword':
+        return 'Word Document (DOC)';
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        return 'Word Document (DOCX)';
+      default:
+        return 'Unknown Format';
+    }
+  };
+
   return (
     <div className="app-container">
-      <header className="app-header">
-        <h1>PDF to Speech</h1>
-        <p className="subtitle">Transform your PDF documents into natural-sounding speech</p>
-      </header>
-
       <main className="main-content">
         <section className="hero-section">
           <div className="hero-content">
-            <h2>Convert PDF to Audio</h2>
-            <p>Simply drag and drop your PDF file to get started</p>
+            <h2>1. Upload your document to get started or add your text</h2>
           </div>
         </section>
 
@@ -162,6 +194,7 @@ function App() {
             {uploadedFile ? (
               <div className="uploaded-file">
                 <p>File uploaded: {uploadedFile.name}</p>
+                <p className="file-type">Type: {getFileTypeDisplay(uploadedFile.type)}</p>
                 <p className="file-size">Size: {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB</p>
                 <button 
                   className="remove-file"
@@ -181,7 +214,7 @@ function App() {
             ) : (
               <div className="dropzone-content">
                 <div className="upload-icon">
-                  <img src={pdfIcon} alt="PDF Icon" />
+                  <img src={document} alt="PDF Icon" />
                 </div>
                 <p>Drag and drop a PDF file here, or click to select one</p>
               </div>
