@@ -582,16 +582,6 @@ function App() {
                       />
                     </div>
                   </div>
-                  {isSpeaking && (
-                    <div className="speaking-indicator">
-                      <div className="sound-waves">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                      </div>
-                      <p>Listening to {uploadedFile ? uploadedFile.name : 'your text'}</p>
-                    </div>
-                  )}
                 </div>
 
                 <div className="listening-section">
@@ -603,6 +593,54 @@ function App() {
                       </div>
                     ) : (
                       <div className="audio-player">
+                        <div className="player-header">
+                          {isSpeaking && (
+                            <div className="sound-waves">
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                            </div>
+                          )}
+                          <p className="now-playing">{isSpeaking ? `${uploadedFile ? uploadedFile.name : 'Your text'}` : 'Ready to play'}</p>
+                        </div>
                         <div className="progress-container">
                           <div className="time current">{formatTime(currentTime)}</div>
                           <div 
