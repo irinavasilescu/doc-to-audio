@@ -584,7 +584,7 @@ function App() {
                     ) : (
                       <div className="audio-player">
                         <div className="player-header">
-                          {isSpeaking && (
+                          {isSpeaking && !isPaused && (
                             <div className="sound-waves">
                               <span></span>
                               <span></span>
