@@ -48,6 +48,7 @@ const Header = () => {
           languageOptions={translationLanguagesOptions}
           selectedLanguage={selectedLanguage}
           onLanguageChange={setSelectedLanguage}
+          direction="down"
         />
       </Nav>
     </HeaderContainer>

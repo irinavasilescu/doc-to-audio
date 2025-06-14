@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import translationLanguagesOptions from '../values/translationLanguagesOptions';
 
 const LanguageDropdownContainer = styled.div`
   position: relative;
@@ -31,10 +30,34 @@ const DropdownContent = styled.div`
   right: 0;
   background-color: #FFFFFF;
   min-width: 200px;
+  max-height: 300px;
+  overflow-y: auto;
   box-shadow: 0 8px 16px rgba(0,0,0,0.1);
   border-radius: 5px;
   z-index: 1000;
-  margin-top: 0.5rem;
+  margin-top: ${props => props.direction === 'up' ? '0' : '0.5rem'};
+  margin-bottom: ${props => props.direction === 'up' ? '0.5rem' : '0'};
+  bottom: ${props => props.direction === 'up' ? '100%' : 'auto'};
+  top: ${props => props.direction === 'up' ? 'auto' : '100%'};
+
+  /* Custom scrollbar styling */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 `;
 
 const LanguageOption = styled.div`
@@ -59,7 +82,7 @@ const LanguageOption = styled.div`
   }
 `;
 
-const LanguageDropdown = ({ selectedLanguage, onLanguageChange, languageOptions = [] }) => {
+const LanguageDropdown = ({ selectedLanguage, onLanguageChange, languageOptions = [], direction = 'down' }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -89,7 +112,7 @@ const LanguageDropdown = ({ selectedLanguage, onLanguageChange, languageOptions 
         <span>{selectedOption?.flag}</span>
         {selectedOption?.name}
       </DropdownButton>
-      <DropdownContent isOpen={isDropdownOpen}>
+      <DropdownContent isOpen={isDropdownOpen} direction={direction}>
         {languageOptions.map((option) => (
           <LanguageOption 
             key={option.code} 

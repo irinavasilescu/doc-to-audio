@@ -342,6 +342,7 @@ function App() {
                   selectedLanguage={selectedLanguage}
                   onLanguageChange={(language) => setSelectedLanguage(language)}
                   languageOptions={voiceLanguageOptions}
+                  direction="up"
                 />
               </div>
               <div className="speech-controls">
