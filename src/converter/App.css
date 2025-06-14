@@ -1,11 +1,12 @@
 :root {
-  --primary-color: #2563eb;
-  --primary-dark: #1d4ed8;
-  --secondary-color: #0d9488;
+  --primary-color: #192BC2;
+  --primary-dark: #150578;
+  --secondary-color: #DC3545;
+  --secondary-dark: #b91c1c;
   --text-color: #1f2937;
   --text-light: #6b7280;
   --background-color: #ffffff;
-  --background-alt: #f3f4f6;
+  --background-alt: #f8f8f8;
   --error-color: #dc2626;
   --success-color: #059669;
   --border-color: #e5e7eb;
@@ -78,20 +79,20 @@ body {
 }
 
 .dropzone {
-  border: 2px dashed #192BC2;
+  border: 2px dashed var(--primary-color);
   border-radius: 12px;
   padding: 3rem 2rem;
   text-align: center;
   cursor: pointer;
   margin: 2rem auto;
   transition: all 0.3s ease;
-  background-color: #F8F8F8;
+  background-color: var(--background-alt);
   box-shadow: 0 4px 6px rgba(25, 43, 194, 0.1);
 }
 
 .dropzone:hover {
-  border-color: #150578;
-  background-color: #FFFFFF;
+  border-color: var(--primary-dark);
+  background-color: var(--background-color);
   box-shadow: 0 8px 15px rgba(25, 43, 194, 0.15);
   transform: translateY(-2px);
 }
@@ -110,7 +111,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(25, 43, 194, 0.1), rgba(220, 53, 69, 0.1));
+  background-color: var(--background-alt);
   border-radius: 50%;
   padding: 1.5rem;
 }
@@ -155,7 +156,7 @@ body {
 .remove-file {
   margin-top: 1rem;
   padding: 0.75rem 1.5rem;
-  background-color: #DC3545;
+  background-color: var(--secondary-color);
   color: white;
   border: none;
   border-radius: 6px;
@@ -165,7 +166,7 @@ body {
 }
 
 .remove-file:hover {
-  background-color: #b91c1c;
+  background-color: var(--secondary-dark);
   transform: translateY(-1px);
 }
 
@@ -381,28 +382,28 @@ body {
   width: 100%;
   min-height: 300px;
   padding: 3rem 2rem;
-  border: 2px dashed #192BC2;
+  border: 2px dashed var(--primary-color);
   border-radius: 12px;
   font-size: 16px;
   line-height: 1.5;
   resize: vertical;
   font-family: inherit;
-  background-color: #F8F8F8;
+  background-color: var(--background-alt);
   box-shadow: 0 4px 6px rgba(25, 43, 194, 0.1);
   transition: all 0.3s ease;
 }
 
 .text-input:hover {
-  border-color: #150578;
-  background-color: #FFFFFF;
+  border-color: var(--primary-dark);
+  background-color: var(--background-color);
   box-shadow: 0 8px 15px rgba(25, 43, 194, 0.15);
   transform: translateY(-2px);
 }
 
 .text-input:focus {
   outline: none;
-  border-color: #150578;
-  background-color: #FFFFFF;
+  border-color: var(--primary-dark);
+  background-color: var(--background-color);
   box-shadow: 0 8px 15px rgba(25, 43, 194, 0.15);
   transform: translateY(-2px);
 }
@@ -467,13 +468,14 @@ body {
   flex-direction: column;
   align-items: flex-start;
   padding: 2rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   transition: all 0.2s ease;
+  background-color: var(--background-color);
 }
 
 .language-section:hover {
-  border-color: #192BC2;
+  border-color: var(--primary-color);
 }
 
 .listening-section {
@@ -481,11 +483,11 @@ body {
   flex-direction: column;
   align-items: flex-start;
   padding: 2rem;
-  background: #f8fafc;
+  background: var(--background-alt);
   border-radius: 12px;
-  color: #1e293b;
+  color: var(--text-color);
   transition: all 0.2s ease;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color);
 }
 
 .section-header {
@@ -495,7 +497,7 @@ body {
 
 .section-header h3 {
   font-size: 1.5rem;
-  color: #192BC2;
+  color: var(--primary-color);
   margin-bottom: 0.75rem;
   font-weight: 600;
 }
@@ -569,7 +571,7 @@ body {
   font-size: 1rem;
   font-weight: 600;
   color: #FFFFFF;
-  background: #192BC2;
+  background: var(--primary-color);
   border: none;
   border-radius: 24px;
   cursor: pointer;
@@ -579,16 +581,16 @@ body {
 }
 
 .speak-btn:hover {
-  background: #150578;
+  background: var(--primary-dark);
   transform: scale(1.02);
 }
 
 .speak-btn.playing {
-  background: #DC3545;
+  background: var(--secondary-color);
 }
 
 .speak-btn.playing:hover {
-  background: #b91c1c;
+  background: var(--secondary-dark);
 }
 
 .speak-btn svg {
@@ -608,10 +610,10 @@ body {
   justify-content: center;
   gap: 1rem;
   padding: 1.25rem;
-  background: #f1f5f9;
+  background: var(--background-alt);
   border-radius: 8px;
-  color: #1e293b;
-  border: 1px solid #e5e7eb;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
   margin: 2rem auto;
   max-width: 400px;
   transition: all 0.3s ease;
@@ -639,7 +641,7 @@ body {
 .sound-waves span {
   width: 3px;
   height: 15px;
-  background: #192BC2;
+  background: var(--primary-color);
   border-radius: 3px;
   animation: sound-wave 1s ease-in-out infinite;
 }
@@ -731,7 +733,7 @@ body {
   left: 0;
   top: 0;
   height: 100%;
-  background: #4CAF50;
+  background: var(--primary-color);
   border-radius: 3px;
   pointer-events: none;
 }
@@ -741,7 +743,7 @@ body {
   top: 50%;
   width: 16px;
   height: 16px;
-  background: #4CAF50;
+  background: var(--primary-color);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   cursor: grab;
@@ -790,19 +792,19 @@ body {
 
 .control-btn.play svg,
 .control-btn.resume svg {
-  fill: #4CAF50;
+  fill: var(--primary-color);
 }
 
 .control-btn.pause svg {
-  fill: #FFA000;
+  fill: var(--secondary-color);
 }
 
 .control-btn.stop svg {
-  fill: #F44336;
+  fill: var(--secondary-color);
 }
 
 .control-btn.skip-forward svg,
 .control-btn.skip-backward svg {
-  fill: #2196F3;
+  fill: var(--primary-color);
 }
 
