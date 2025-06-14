@@ -1,18 +1,21 @@
 {
   "files": {
-    "main.css": "/scribbloo/static/css/main.1f788b9f.css",
-    "main.js": "/scribbloo/static/js/main.640ccd02.js",
+    "main.css": "/scribbloo/static/css/main.8b4bb64a.css",
+    "main.js": "/scribbloo/static/js/main.3c8bfde6.js",
     "static/js/453.c8a29d9c.chunk.js": "/scribbloo/static/js/453.c8a29d9c.chunk.js",
     "static/media/person_reading.png": "/scribbloo/static/media/person_reading.8fcd3054cb2f4f14ffe6.png",
     "static/media/world_map.png": "/scribbloo/static/media/world_map.618293c9d3aea520b952.png",
+    "static/media/document.png": "/scribbloo/static/media/document.2ebca10c0034c073a146.png",
+    "static/media/docx_icon.png": "/scribbloo/static/media/docx_icon.cce5993c7ff1ae9ce783.png",
+    "static/media/epub_icon.png": "/scribbloo/static/media/epub_icon.3bb7b176a0b2d2447a20.png",
     "static/media/pdf_icon.png": "/scribbloo/static/media/pdf_icon.11a2d397ad3728f57231.png",
     "index.html": "/scribbloo/index.html",
-    "main.1f788b9f.css.map": "/scribbloo/static/css/main.1f788b9f.css.map",
-    "main.640ccd02.js.map": "/scribbloo/static/js/main.640ccd02.js.map",
+    "main.8b4bb64a.css.map": "/scribbloo/static/css/main.8b4bb64a.css.map",
+    "main.3c8bfde6.js.map": "/scribbloo/static/js/main.3c8bfde6.js.map",
     "453.c8a29d9c.chunk.js.map": "/scribbloo/static/js/453.c8a29d9c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1f788b9f.css",
-    "static/js/main.640ccd02.js"
+    "static/css/main.8b4bb64a.css",
+    "static/js/main.3c8bfde6.js"
   ]
 }
