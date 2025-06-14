@@ -8,6 +8,7 @@ import epubIcon from '../assets/epub_icon.png';
 import docIcon from '../assets/doc_icon.png';
 import docxIcon from '../assets/docx_icon.png';
 import { supportedFileTypes } from '../values/fileTypes';
+import voiceLanguageOptions from '../values/voiceLanguageOptions';
 
 // Initialize PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
@@ -21,6 +22,7 @@ function App() {
   const [isVoiceReady, setIsVoiceReady] = useState(false);
   const [isTextInputMode, setIsTextInputMode] = useState(false);
   const [inputText, setInputText] = useState('');
+  const [selectedLanguage, setSelectedLanguage] = useState('US English Female');
 
   useEffect(() => {
     // Check if ResponsiveVoice is available
@@ -49,7 +51,7 @@ function App() {
 
     try {
       setIsSpeaking(true);
-      window.responsiveVoice.speak(extractedText, "US English Female", {
+      window.responsiveVoice.speak(extractedText, selectedLanguage, {
         onend: () => {
           setIsSpeaking(false);
         },
@@ -311,9 +313,35 @@ function App() {
 
           {extractedText && (
             <div className="extracted-text">
-              <h3>Extracted Text</h3>
+              <section className="hero-section">
+                <div className="hero-content">
+                  <h2>
+                    <span>2. Review extracted text</span>
+                  </h2>
+                </div>
+              </section>
               <div className="text-content">
                 {extractedText}
+              </div>
+              <section className="hero-section">
+                <div className="hero-content">
+                  <h2>
+                    <span>3. Select language for speech</span>
+                  </h2>
+                </div>
+              </section>
+              <div className="language-selector">
+                <select 
+                  value={selectedLanguage} 
+                  onChange={(e) => setSelectedLanguage(e.target.value)}
+                  className="language-select"
+                >
+                  {voiceLanguageOptions.map(lang => (
+                    <option key={lang.code} value={lang.code}>
+                      {lang.name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="speech-controls">
                 {!isVoiceReady ? (
