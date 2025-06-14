@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const CTAContainer = styled.section`
   padding: 6rem 2rem;
@@ -36,13 +37,15 @@ const PrimaryButton = styled.button`
 `;
 
 const CTASection = () => {
+  const navigate = useNavigate();
+
   return (
     <CTAContainer>
       <MainTitle>Ready to transform your reading experience?</MainTitle>
       <MainSubtitle>
         Start converting your documents to audio today. It's free, fast, and secure.
       </MainSubtitle>
-      <PrimaryButton>
+      <PrimaryButton onClick={() => navigate('/converter')}>
         Get started now
       </PrimaryButton>
     </CTAContainer>
