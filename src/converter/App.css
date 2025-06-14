@@ -408,35 +408,45 @@ body {
 }
 
 .language-selector {
-  margin: 2rem auto;
-  text-align: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
 }
 
 .language-select {
-  padding: 0.75rem 1.5rem;
-  font-size: 1.1rem;
-  border: 2px solid #192BC2;
-  border-radius: 8px;
-  background-color: #FFFFFF;
-  color: #192BC2;
+  padding: 10px 15px;
+  padding-left: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
   cursor: pointer;
-  min-width: 200px;
-  transition: all 0.3s ease;
+  min-width: 250px;
   appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23192BC2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
-  background-position: right 1rem center;
-  background-size: 1em;
+  background-position: right 10px center;
+  background-size: 16px;
 }
 
-.language-select:hover {
-  border-color: #150578;
-  box-shadow: 0 4px 6px rgba(25, 43, 194, 0.1);
-  transform: translateY(-1px);
+.language-select option {
+  padding: 10px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.language-select:focus {
-  outline: none;
-  border-color: #150578;
-  box-shadow: 0 4px 6px rgba(25, 43, 194, 0.1);
+.selected-flag {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  pointer-events: none;
+  z-index: 1;
 }

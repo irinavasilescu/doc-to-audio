@@ -9,6 +9,7 @@ import docIcon from '../assets/doc_icon.png';
 import docxIcon from '../assets/docx_icon.png';
 import { supportedFileTypes } from '../values/fileTypes';
 import voiceLanguageOptions from '../values/voiceLanguageOptions';
+import LanguageDropdown from '../common/LanguageDropdown';
 
 // Initialize PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
@@ -22,7 +23,8 @@ function App() {
   const [isVoiceReady, setIsVoiceReady] = useState(false);
   const [isTextInputMode, setIsTextInputMode] = useState(false);
   const [inputText, setInputText] = useState('');
-  const [selectedLanguage, setSelectedLanguage] = useState('US English Female');
+  const [selectedLanguage, setSelectedLanguage] = useState(voiceLanguageOptions[2].name); // US English Female
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     // Check if ResponsiveVoice is available
@@ -51,7 +53,8 @@ function App() {
 
     try {
       setIsSpeaking(true);
-      window.responsiveVoice.speak(extractedText, selectedLanguage, {
+      const selectedVoice = voiceLanguageOptions.find(option => option.name === selectedLanguage);
+      window.responsiveVoice.speak(extractedText, selectedVoice.code, {
         onend: () => {
           setIsSpeaking(false);
         },
@@ -223,6 +226,10 @@ function App() {
     stopSpeaking();
   };
 
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   return (
     <div className="app-container">
       <main className="main-content">
@@ -331,17 +338,11 @@ function App() {
                 </div>
               </section>
               <div className="language-selector">
-                <select 
-                  value={selectedLanguage} 
-                  onChange={(e) => setSelectedLanguage(e.target.value)}
-                  className="language-select"
-                >
-                  {voiceLanguageOptions.map(lang => (
-                    <option key={lang.code} value={lang.code}>
-                      {lang.name}
-                    </option>
-                  ))}
-                </select>
+                <LanguageDropdown
+                  selectedLanguage={selectedLanguage}
+                  onLanguageChange={(language) => setSelectedLanguage(language)}
+                  languageOptions={voiceLanguageOptions}
+                />
               </div>
               <div className="speech-controls">
                 {!isVoiceReady ? (
