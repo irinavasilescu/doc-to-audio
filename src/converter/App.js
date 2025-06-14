@@ -572,10 +572,6 @@ function App() {
               </section>
               <div className="speech-settings-container">
                 <div className="language-section">
-                  <div className="section-header">
-                    <h3>Select Voice</h3>
-                    <p className="section-description">Choose your preferred voice and accent</p>
-                  </div>
                   <div className="language-selector">
                     <LanguageDropdown
                       selectedLanguage={selectedLanguage}
@@ -587,10 +583,6 @@ function App() {
                 </div>
 
                 <div className="listening-section">
-                  <div className="section-header">
-                    <h3>Listening Controls</h3>
-                    <p className="section-description">Control playback and adjust settings</p>
-                  </div>
                   <div className="speech-controls">
                     {!isVoiceReady ? (
                       <div className="voice-loading-container">
