@@ -50,7 +50,7 @@ body {
 
 .main-content {
   flex: 1;
-  padding: 2rem 1rem;
+  padding: 1rem;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
@@ -58,7 +58,7 @@ body {
 
 .hero-section {
   text-align: center;
-  padding: 3rem 1rem;
+  padding: 1rem;
 }
 
 .hero-content h2 {

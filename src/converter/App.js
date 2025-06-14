@@ -552,21 +552,11 @@ function App() {
           )}
 
           {extractedText && (
-            <div className="extracted-text">
+            <div>
               <section className="hero-section">
                 <div className="hero-content">
                   <h2>
-                    <span>2. Review extracted text</span>
-                  </h2>
-                </div>
-              </section>
-              <div className="text-content">
-                {extractedText}
-              </div>
-              <section className="hero-section">
-                <div className="hero-content">
-                  <h2>
-                    <span>3. Select language and listen</span>
+                    <span>2. Select language and listen</span>
                   </h2>
                 </div>
               </section>
