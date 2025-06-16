@@ -10,7 +10,8 @@ import docxIcon from '../assets/docx_icon.png';
 import { supportedFileTypes } from '../values/fileTypes';
 import voiceLanguageOptions from '../values/voiceLanguageOptions';
 import LanguageDropdown from '../common/LanguageDropdown';
-import PlayerButton from './PlayerButton';
+import PlayerButton from './components/PlayerButton';
+import SoundWave from './components/SoundWave';
 
 // Initialize PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
@@ -658,51 +659,7 @@ function App() {
                     ) : (
                       <div className="audio-player">
                         <div className="player-header">
-                          {isSpeaking && !isPaused && (
-                            <div className="sound-waves">
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                            </div>
-                          )}
+                          {isSpeaking && !isPaused && <SoundWave />}
                           <p className="now-playing">{isSpeaking ? `${uploadedFile ? uploadedFile.name : 'Your text'}` : 'Ready to play'}</p>
                         </div>
                         <div className="progress-container">
