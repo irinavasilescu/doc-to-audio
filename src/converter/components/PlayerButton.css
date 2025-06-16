@@ -1,0 +1,44 @@
+.control-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.control-btn:hover:not(:disabled) {
+  background: var(--background-color);
+  transform: scale(1.1);
+}
+
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.control-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+.control-btn.play svg,
+.control-btn.resume svg {
+  fill: var(--primary-color);
+}
+
+.control-btn.pause svg {
+  fill: var(--secondary-color);
+}
+
+.control-btn.stop svg {
+  fill: var(--secondary-color);
+}
+
+.control-btn.skip-forward svg,
+.control-btn.skip-backward svg {
+  fill: var(--primary-color);
+}

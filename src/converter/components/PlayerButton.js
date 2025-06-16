@@ -1,4 +1,5 @@
 import React from 'react';
+import './PlayerButton.css';
 
 const PlayerButton = ({ 
   type, 
