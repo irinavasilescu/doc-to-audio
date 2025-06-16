@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import worldMapImage from '../../assets/world_map.png';
-import languages from '../../values/languages.ts';
-import flags from '../../values/flags.ts';
+import languages from '../../values/languages.js';
+import flags from '../../values/flags.js';
 
 const LanguagesContainer = styled.section`
   padding: 4rem 2rem;

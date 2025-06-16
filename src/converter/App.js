@@ -10,6 +10,7 @@ import docxIcon from '../assets/docx_icon.png';
 import { supportedFileTypes } from '../values/fileTypes';
 import voiceLanguageOptions from '../values/voiceLanguageOptions';
 import LanguageDropdown from '../common/LanguageDropdown';
+import PlayerButton from './PlayerButton';
 
 // Initialize PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
@@ -724,52 +725,32 @@ function App() {
                           <div className="time total">{formatTime(duration)}</div>
                         </div>
                         <div className="player-controls">
-                          <button 
-                            className="control-btn play"
+                          <PlayerButton 
+                            type="play"
                             onClick={!isSpeaking ? speakText : (isPaused ? resumeSpeaking : pauseSpeaking)}
                             disabled={!extractedText}
                             title={!isSpeaking ? "Play" : (isPaused ? "Resume" : "Pause")}
-                          >
-                            <svg viewBox="0 0 24 24">
-                              {!isSpeaking ? (
-                                <path d="M8 5v14l11-7z"/>
-                              ) : isPaused ? (
-                                <path d="M8 5v14l11-7z"/>
-                              ) : (
-                                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                              )}
-                            </svg>
-                          </button>
-                          <button 
-                            className="control-btn stop"
+                            isSpeaking={isSpeaking}
+                            isPaused={isPaused}
+                          />
+                          <PlayerButton 
+                            type="stop"
                             onClick={stopSpeaking}
                             disabled={!isSpeaking}
                             title="Stop"
-                          >
-                            <svg viewBox="0 0 24 24">
-                              <path d="M6 6h12v12H6z"/>
-                            </svg>
-                          </button>
-                          <button 
-                            className="control-btn skip-backward"
+                          />
+                          <PlayerButton 
+                            type="skip-backward"
                             onClick={skipBackward}
                             disabled={!isSpeaking}
                             title="Skip backward 5 seconds"
-                          >
-                            <svg viewBox="0 0 24 24">
-                              <path d="M11.5 12l8.5 6V6l-8.5 6z"/>
-                            </svg>
-                          </button>
-                          <button 
-                            className="control-btn skip-forward"
+                          />
+                          <PlayerButton 
+                            type="skip-forward"
                             onClick={skipForward}
                             disabled={!isSpeaking}
                             title="Skip forward 5 seconds"
-                          >
-                            <svg viewBox="0 0 24 24">
-                              <path d="M4 18l8.5-6L4 6v12z"/>
-                            </svg>
-                          </button>
+                          />
                         </div>
                       </div>
                     )}
