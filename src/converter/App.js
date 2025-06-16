@@ -83,7 +83,7 @@ function App() {
         setCurrentTime(newTime);
         setVisualProgress(newTime / duration);
       }
-    }, 100);
+    }, 50);
   };
 
   const stopProgressTracking = () => {
@@ -92,6 +92,7 @@ function App() {
 
   const speakText = () => {
     if (!extractedText || !isVoiceReady) return;
+    setError(null);
 
     try {
       setIsSpeaking(true);
@@ -103,30 +104,50 @@ function App() {
       setDuration(estimatedDuration);
       setCurrentTime(0);
       setProgress(0);
+      setVisualProgress(0);
+      
+      // Clear any existing interval
+      if (progressInterval.current) {
+        clearInterval(progressInterval.current);
+      }
+      
+      // Set initial time reference
+      startTimeRef.current = Date.now();
       
       window.responsiveVoice.speak(extractedText, selectedVoice.code, {
         onstart: () => {
-          startProgressTracking(0);
+          // Start progress tracking immediately
+          progressInterval.current = setInterval(() => {
+            const elapsed = (Date.now() - startTimeRef.current) / 1000;
+            setCurrentTime(elapsed);
+            setVisualProgress(elapsed / duration);
+          }, 50);
         },
         onend: () => {
           setIsSpeaking(false);
           setIsPaused(false);
           setProgress(1);
           setCurrentTime(duration);
-          stopProgressTracking();
+          if (progressInterval.current) {
+            clearInterval(progressInterval.current);
+          }
         },
         onerror: () => {
           setError('Error playing speech');
           setIsSpeaking(false);
           setIsPaused(false);
-          stopProgressTracking();
+          if (progressInterval.current) {
+            clearInterval(progressInterval.current);
+          }
         }
       });
     } catch (err) {
       setError('Error playing speech: ' + err.message);
       setIsSpeaking(false);
       setIsPaused(false);
-      stopProgressTracking();
+      if (progressInterval.current) {
+        clearInterval(progressInterval.current);
+      }
     }
   };
 

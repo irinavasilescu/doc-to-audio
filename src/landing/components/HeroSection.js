@@ -161,7 +161,7 @@ const HeroSection = () => {
       <HeroContent>
         <TextContent>
           <MainTitle>
-            Turn your <span>PDFs</span> into <span>audio files.</span> <br/> Effortlessly.
+            Turn your <span>docs</span> into <span>audio files.</span> <br/> Effortlessly.
           </MainTitle>
           <MainSubtitle>
             With one click, transform written content into engaging audio. It's your personal reader for work, study, or leisure—anytime, anywhere.
@@ -178,7 +178,7 @@ const HeroSection = () => {
       <StatsContainer id="stats-section">
         <StatItem>
           <h3>Fast</h3>
-          <p>Get started instantly. Just upload your PDF and start listening. No signups and no complicated setup. It's as easy as hitting "Play".</p>
+          <p>Get started instantly. Just upload your document and start listening. No signups and no complicated setup. It's as easy as hitting "Play".</p>
         </StatItem>
         <StatItem>
           <h3>Private</h3>
@@ -186,7 +186,7 @@ const HeroSection = () => {
         </StatItem>
         <StatItem>
           <h3>Multilingual</h3>
-          <p>Listen to content in your language or practice another! The app can recognize and read PDFs in over 30 languages.</p>
+          <p>Listen to content in your language or practice another! The app can recognize and read documents in over 30 languages.</p>
         </StatItem>
         <StatItem>
           <h3>Free</h3>

@@ -144,8 +144,8 @@ const FeaturesSection = () => {
                 <path d="M12 15V3" stroke="#192BC2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
-            <h3>Convert & download</h3>
-            <p>Get your audiobook ready in seconds. Download and listen on any device, anywhere, anytime.</p>
+            <h3>Convert & listen</h3>
+            <p>Get your audiobook ready in seconds. Listen on any device, anywhere, anytime.</p>
           </AppFeatureCard>
         </AppFeaturesGrid>
       </AppFeaturesSection>
