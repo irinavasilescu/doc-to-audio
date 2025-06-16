@@ -180,63 +180,115 @@ function App() {
 
   const skipForward = () => {
     if (window.responsiveVoice && isSpeaking) {
-      const newTime = Math.min(currentTime + 5, duration);
-      // Calculate approximate character position (20 chars per second)
-      const charPosition = Math.floor(newTime * 20);
-      const remainingText = extractedText.substring(charPosition);
-      
-      // Stop current playback
-      window.responsiveVoice.cancel();
-      
-      // Start new playback from the new position
-      const selectedVoice = voiceLanguageOptions.find(option => option.name === selectedLanguage);
-      window.responsiveVoice.speak(remainingText, selectedVoice.code, {
-        onstart: () => {
-          startTimeRef.current = Date.now() - (newTime * 1000);
-          startProgressTracking(newTime);
-        },
-        onend: () => {
-          setIsSpeaking(false);
-          setIsPaused(false);
-          setProgress(1);
-          setCurrentTime(duration);
-          stopProgressTracking();
-        }
-      });
-      
-      setCurrentTime(newTime);
-      setProgress(newTime / duration);
+      setError(null);
+      try {
+        const newTime = Math.min(currentTime + 5, duration);
+        // Calculate approximate character position based on text length and duration
+        const charPosition = Math.floor((newTime / duration) * extractedText.length);
+        const remainingText = extractedText.substring(charPosition);
+        
+        // Stop current playback
+        window.responsiveVoice.cancel();
+        
+        // Reset states before starting new playback
+        setIsSpeaking(false);
+        setIsPaused(false);
+        stopProgressTracking();
+        
+        // Small delay to ensure previous speech is fully stopped
+        setTimeout(() => {
+          // Start new playback from the new position
+          const selectedVoice = voiceLanguageOptions.find(option => option.name === selectedLanguage);
+          window.responsiveVoice.speak(remainingText, selectedVoice.code, {
+            onstart: () => {
+              setIsSpeaking(true);
+              setIsPaused(false);
+              startTimeRef.current = Date.now() - (newTime * 1000);
+              startProgressTracking(newTime);
+            },
+            onend: () => {
+              setIsSpeaking(false);
+              setIsPaused(false);
+              setProgress(1);
+              setCurrentTime(duration);
+              stopProgressTracking();
+            },
+            onerror: (error) => {
+              // console.error('Speech error:', error);
+              setError('Error playing speech');
+              setIsSpeaking(false);
+              setIsPaused(false);
+              stopProgressTracking();
+            }
+          });
+          
+          setCurrentTime(newTime);
+          setVisualProgress(newTime / duration);
+        }, 100);
+      } catch (error) {
+        console.error('Skip forward error:', error);
+        setError('Error during skip forward');
+        setIsSpeaking(false);
+        setIsPaused(false);
+        stopProgressTracking();
+      }
     }
   };
 
   const skipBackward = () => {
     if (window.responsiveVoice && isSpeaking) {
-      const newTime = Math.max(currentTime - 5, 0);
-      // Calculate approximate character position (20 chars per second)
-      const charPosition = Math.floor(newTime * 20);
-      const remainingText = extractedText.substring(charPosition);
-      
-      // Stop current playback
-      window.responsiveVoice.cancel();
-      
-      // Start new playback from the new position
-      const selectedVoice = voiceLanguageOptions.find(option => option.name === selectedLanguage);
-      window.responsiveVoice.speak(remainingText, selectedVoice.code, {
-        onstart: () => {
-          startTimeRef.current = Date.now() - (newTime * 1000);
-          startProgressTracking(newTime);
-        },
-        onend: () => {
-          setIsSpeaking(false);
-          setIsPaused(false);
-          setProgress(1);
-          setCurrentTime(duration);
-          stopProgressTracking();
-        }
-      });
-      
-      setCurrentTime(newTime);
-      setProgress(newTime / duration);
+      setError(null);
+      try {
+        const newTime = Math.max(currentTime - 5, 0);
+        // Calculate approximate character position based on text length and duration
+        const charPosition = Math.floor((newTime / duration) * extractedText.length);
+        const remainingText = extractedText.substring(charPosition);
+        
+        // Stop current playback
+        window.responsiveVoice.cancel();
+        
+        // Reset states before starting new playback
+        setIsSpeaking(false);
+        setIsPaused(false);
+        stopProgressTracking();
+        
+        // Small delay to ensure previous speech is fully stopped
+        setTimeout(() => {
+          // Start new playback from the new position
+          const selectedVoice = voiceLanguageOptions.find(option => option.name === selectedLanguage);
+          window.responsiveVoice.speak(remainingText, selectedVoice.code, {
+            onstart: () => {
+              setIsSpeaking(true);
+              setIsPaused(false);
+              startTimeRef.current = Date.now() - (newTime * 1000);
+              startProgressTracking(newTime);
+            },
+            onend: () => {
+              setIsSpeaking(false);
+              setIsPaused(false);
+              setProgress(1);
+              setCurrentTime(duration);
+              stopProgressTracking();
+            },
+            onerror: (error) => {
+              // console.error('Speech error:', error);
+              setError('Error playing speech');
+              setIsSpeaking(false);
+              setIsPaused(false);
+              stopProgressTracking();
+            }
+          });
+          
+          setCurrentTime(newTime);
+          setVisualProgress(newTime / duration);
+        }, 100);
+      } catch (error) {
+        console.error('Skip backward error:', error);
+        setError('Error during skip backward');
+        setIsSpeaking(false);
+        setIsPaused(false);
+        stopProgressTracking();
+      }
     }
   };
 
